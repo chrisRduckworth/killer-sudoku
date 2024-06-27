@@ -11,7 +11,7 @@ describe("Constructor", () => {
 			expect(cell.position).toBe(5);
 		});
 		it("should only accept numerical arguments for position", () => {
-			const position = "bananas" as any;
+			const position = "bananas";
 			expect(() => new Cell(position)).toThrow(TypeError);
 		});
 		it("should only accept numbers between 0 and 81", () => {
@@ -58,6 +58,25 @@ describe("Constructor", () => {
 			expect(cell1.box).toBe(1);
 			expect(cell2.box).toBe(5);
 			expect(cell3.box).toBe(6);
+		});
+	});
+	describe("value and possibleValues", () => {
+		it("should initialize with a value of 0", () => {
+			const cell1 = new Cell(20);
+			const cell2 = new Cell(35);
+			const cell3 = new Cell(0);
+			expect(cell1).toHaveProperty("value", 0);
+			expect(cell2).toHaveProperty("value", 0)
+			expect(cell3).toHaveProperty("value", 0)
+		});
+		it("should initialize with possible values 1 to 9", () => {
+			const expected = new Set([1, 2, 3, 4, 5, 6, 7, 8, 9]);
+			const cell1 = new Cell(29);
+			const cell2 = new Cell(78);
+			const cell3 = new Cell(2);
+			expect(cell1.possibleValues).toEqual(expected);
+			expect(cell2.possibleValues).toEqual(expected);
+			expect(cell3.possibleValues).toEqual(expected);
 		});
 	});
 });
