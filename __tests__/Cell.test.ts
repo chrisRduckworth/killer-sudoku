@@ -8,7 +8,7 @@ describe("Constructor", () => {
 		});
 		it("should create a position property as given", () => {
 			const cell = new Cell(5);
-			expect(cell.position).toBe(5);
+			expect(cell).toHaveProperty("position", 5);
 		});
 		it("should only accept numerical arguments for position", () => {
 			const position = "bananas";
@@ -39,25 +39,25 @@ describe("Constructor", () => {
 			const cell1 = new Cell(5);
 			const cell2 = new Cell(14);
 			const cell3 = new Cell(55);
-			expect(cell1.row).toBe(0);
-			expect(cell2.row).toBe(1);
-			expect(cell3.row).toBe(6);
+			expect(cell1).toHaveProperty("row", 0)
+			expect(cell2).toHaveProperty("row", 1)
+			expect(cell3).toHaveProperty("row", 6)
 		});
 		it("should calculate column property", () => {
 			const cell1 = new Cell(5);
 			const cell2 = new Cell(11);
 			const cell3 = new Cell(63);
-			expect(cell1.column).toBe(5);
-			expect(cell2.column).toBe(2);
-			expect(cell3.column).toBe(0);
+			expect(cell1).toHaveProperty("column", 5)
+			expect(cell2).toHaveProperty("column", 2)
+			expect(cell3).toHaveProperty("column", 0)
 		});
 		it("should calculate box property", () => {
 			const cell1 = new Cell(5);
 			const cell2 = new Cell(35);
 			const cell3 = new Cell(63);
-			expect(cell1.box).toBe(1);
-			expect(cell2.box).toBe(5);
-			expect(cell3.box).toBe(6);
+			expect(cell1).toHaveProperty("box", 1)
+			expect(cell2).toHaveProperty("box", 5)
+			expect(cell3).toHaveProperty("box", 6)
 		});
 	});
 	describe("value and possibleValues", () => {
