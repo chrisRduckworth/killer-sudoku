@@ -1,0 +1,36 @@
+To create the sudoku:
+Call killerSudoku constructor which:
+  calls cell constructor 81 times, each with a position from 0 - 80
+  calls the shape constructor according to the input
+  assigns each cell to a shape according to input
+
+killerSudoku class - represnets the sudoku
+PROPS:
+cells - an array of 81 cell objects in order, counted row by row:
+0  1  2  3  4  5  6  7  8
+9 10 11 12 13 14 15 16 17
+etc
+METHODS:
+constructor - takes shape info, constructs cells, shapes, adds shapes to cells.
+
+Cell class - represents an individual cell
+PROPS:
+Position - number from 0 - 80, representing it's position in the grid
+Row - number from 0 - 8, calculated by the position
+column - as above
+box - as above (this is the 3x3 group)
+Value - starts at 0, which means it's empty
+possibleValues - a set of which values are currently possible to be correct, starts at {1,2,3,4,5,6,7,8,9}
+shape - reference to the inner shape the cell is a part of
+METHODS:
+constructor - takes position. calculates column, row, box. Sets value to 0, and possible Values to {1,...,9}
+addShape - takes a shape object, sets the shape property to the shape. This can't be in the constructor because we need the cell to be defined before the shape can be constructed
+
+Do I want a row/column/box properties? They can technically be generated from the position but it might just be easier to do it this way. Though it is slightly less memory efficient, but is more readable.
+
+Shape class - Represents the inner shapes whose cells must add up to a number
+PROPS:
+cells - a set of the cells the shape contains
+sum - The total value the cells must add to
+METHODS:
+constructor - takes cell positions and value, sets the cells and sum
