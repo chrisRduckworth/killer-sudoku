@@ -1,4 +1,4 @@
-import Cell from "../src/Cell"
+import Cell = require("../src/Cell")
 
 describe("Constructor", () => {
 	describe("position property", () => {

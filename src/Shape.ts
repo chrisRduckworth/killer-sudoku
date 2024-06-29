@@ -1,6 +1,6 @@
-import Cell from "./Cell"
+import Cell = require("./Cell");
 
-export default class Shape {
+class Shape {
 	readonly sum: number;
 	constructor(sum: number, cells: Cell[]) {
 		if (typeof sum !== "number" || Math.floor(sum) !== sum) {
@@ -18,3 +18,4 @@ export default class Shape {
 	}
 }
 
+export = Shape;

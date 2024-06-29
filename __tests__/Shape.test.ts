@@ -1,5 +1,5 @@
-import Shape from "../src/Shape"
-import Cell from "../src/Cell"
+import Shape = require("../src/Shape");
+import Cell = require("../src/Cell");
 
 describe("Constructor", () => {
 	describe("Sum property", () => {

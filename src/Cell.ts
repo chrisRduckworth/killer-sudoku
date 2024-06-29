@@ -1,4 +1,4 @@
-export default class Cell {
+class Cell {
 	readonly position: number;
 	readonly row: number;
 	readonly column: number;
@@ -23,3 +23,4 @@ export default class Cell {
 	}
 }
 
+export = Cell
