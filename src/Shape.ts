@@ -1,8 +1,8 @@
 import type { Cell } from "./Cell.ts";
 
 class Shape {
-	readonly sum;
-	constructor(sum: number, ...cells: Cell[]) {
+	readonly sum: number;
+	constructor(sum: number, cells: Cell[]) {
 		if (typeof sum !== "number" || Math.floor(sum) !== sum) {
 			throw new TypeError("Sum must be an integer");
 		}
