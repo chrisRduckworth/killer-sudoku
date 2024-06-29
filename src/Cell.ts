@@ -1,4 +1,4 @@
-class Cell {
+export default class Cell {
 	readonly position: number;
 	readonly row: number;
 	readonly column: number;
@@ -23,5 +23,3 @@ class Cell {
 	}
 }
 
-module.exports = Cell;
-export type { Cell };

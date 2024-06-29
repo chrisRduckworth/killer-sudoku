@@ -1,4 +1,4 @@
-const Cell = require("../src/Cell");
+import Cell from "../src/Cell"
 
 describe("Constructor", () => {
 	describe("position property", () => {
@@ -11,8 +11,7 @@ describe("Constructor", () => {
 			expect(cell).toHaveProperty("position", 5);
 		});
 		it("should only accept numerical arguments for position", () => {
-			const position = "bananas";
-			expect(() => new Cell(position)).toThrow(TypeError);
+			expect(() => new Cell("bananas" as any)).toThrow(TypeError);
 		});
 		it("should only accept numbers between 0 and 81", () => {
 			expect(() => new Cell(900)).toThrow(RangeError);

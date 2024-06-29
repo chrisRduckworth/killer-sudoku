@@ -1,5 +1,5 @@
-const Shape = require("../src/Shape");
-const Cell = require("../src/Cell");
+import Shape from "../src/Shape"
+import Cell from "../src/Cell"
 
 describe("Constructor", () => {
 	describe("Sum property", () => {
@@ -20,7 +20,7 @@ describe("Constructor", () => {
 		it("should only accept numbers for sum", () => {
 			const cell = new Cell(5);
 
-			expect(() => new Shape("bananas", [cell])).toThrow(TypeError);
+			expect(() => new Shape("bananas" as any, [cell])).toThrow(TypeError);
 		});
 		it("should only accept integers for sum", () => {
 			const cell = new Cell(5);

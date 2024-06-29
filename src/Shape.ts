@@ -1,6 +1,6 @@
-import type { Cell } from "./Cell.ts";
+import Cell from "./Cell"
 
-class Shape {
+export default class Shape {
 	readonly sum: number;
 	constructor(sum: number, cells: Cell[]) {
 		if (typeof sum !== "number" || Math.floor(sum) !== sum) {
@@ -18,4 +18,3 @@ class Shape {
 	}
 }
 
-module.exports = Shape;
