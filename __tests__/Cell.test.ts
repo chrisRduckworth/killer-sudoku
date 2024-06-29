@@ -39,25 +39,25 @@ describe("Constructor", () => {
 			const cell1 = new Cell(5);
 			const cell2 = new Cell(14);
 			const cell3 = new Cell(55);
-			expect(cell1).toHaveProperty("row", 0)
-			expect(cell2).toHaveProperty("row", 1)
-			expect(cell3).toHaveProperty("row", 6)
+			expect(cell1).toHaveProperty("row", 0);
+			expect(cell2).toHaveProperty("row", 1);
+			expect(cell3).toHaveProperty("row", 6);
 		});
 		it("should calculate column property", () => {
 			const cell1 = new Cell(5);
 			const cell2 = new Cell(11);
 			const cell3 = new Cell(63);
-			expect(cell1).toHaveProperty("column", 5)
-			expect(cell2).toHaveProperty("column", 2)
-			expect(cell3).toHaveProperty("column", 0)
+			expect(cell1).toHaveProperty("column", 5);
+			expect(cell2).toHaveProperty("column", 2);
+			expect(cell3).toHaveProperty("column", 0);
 		});
 		it("should calculate box property", () => {
 			const cell1 = new Cell(5);
 			const cell2 = new Cell(35);
 			const cell3 = new Cell(63);
-			expect(cell1).toHaveProperty("box", 1)
-			expect(cell2).toHaveProperty("box", 5)
-			expect(cell3).toHaveProperty("box", 6)
+			expect(cell1).toHaveProperty("box", 1);
+			expect(cell2).toHaveProperty("box", 5);
+			expect(cell3).toHaveProperty("box", 6);
 		});
 	});
 	describe("value and possibleValues", () => {
@@ -66,8 +66,8 @@ describe("Constructor", () => {
 			const cell2 = new Cell(35);
 			const cell3 = new Cell(0);
 			expect(cell1).toHaveProperty("value", 0);
-			expect(cell2).toHaveProperty("value", 0)
-			expect(cell3).toHaveProperty("value", 0)
+			expect(cell2).toHaveProperty("value", 0);
+			expect(cell3).toHaveProperty("value", 0);
 		});
 		it("should initialize with possible values 1 to 9", () => {
 			const expected = new Set([1, 2, 3, 4, 5, 6, 7, 8, 9]);
