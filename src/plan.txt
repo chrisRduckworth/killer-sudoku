@@ -11,7 +11,8 @@ cells - an array of 81 cell objects in order, counted row by row:
 9 10 11 12 13 14 15 16 17
 etc
 METHODS:
-constructor - takes shape info, constructs cells, shapes, adds shapes to cells.
+constructor - takes shape info, constructs cells, shapes, adds shapes to cells. Will need to check for duplicate cells on shape input (i.e. more than one shape has the same cell) and that every cells has a shape
+getRow, getColumn, getBlock - returns an array of the cells in the corresponding row/column/block
 
 Cell class - represents an individual cell
 PROPS:
