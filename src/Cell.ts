@@ -24,3 +24,4 @@ class Cell {
 }
 
 module.exports = Cell;
+export type { Cell };
