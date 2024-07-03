@@ -22,7 +22,7 @@ class Shape {
 			throw new Error("cells cannot contain duplicates");
 		}
 
-		// perform a breadth-first-search to check the positions of the cells are continuous
+		// perform a flood fill to check the positions of the cells are continuous
 		const checked: Cell[] = [];
 		const queue = [cells[0]];
 		while (queue.length > 0) {
@@ -59,6 +59,10 @@ class Shape {
 		}
 
 		this.cells = cells;
+
+		for (const cell of cells) {
+			cell.shape = this;
+		}
 
 		// sum property:
 		if (typeof sum !== "number" || Math.floor(sum) !== sum) {

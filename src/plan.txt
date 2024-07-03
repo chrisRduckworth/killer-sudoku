@@ -21,11 +21,11 @@ Row - number from 0 - 8, calculated by the position
 column - as above
 box - as above (this is the 3x3 group)
 Value - starts at 0, which means it's empty
-possibleValues - a set of which values are currently possible to be correct, starts at {1,2,3,4,5,6,7,8,9}
+possibleValues - a set of which values are currently possible to be correct, starts at {}
 shape - reference to the inner shape the cell is a part of
+walls - which sides of the cell will have walls drawn on (according to the shape)
 METHODS:
 constructor - takes position. calculates column, row, box. Sets value to 0, and possible Values to {1,...,9}
-addShape - takes a shape object, sets the shape property to the shape. This can't be in the constructor because we need the cell to be defined before the shape can be constructed
 
 Do I want a row/column/box properties? They can technically be generated from the position but it might just be easier to do it this way. Though it is slightly less memory efficient, but is more readable.
 

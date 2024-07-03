@@ -1,3 +1,5 @@
+import Shape = require("./Shape")
+
 class Cell {
 	readonly position: number;
 	readonly row: number;
@@ -6,6 +8,7 @@ class Cell {
 
 	value = 0;
 	possibleValues = new Set();
+	shape!: Shape;
 
 	constructor(position: number) {
 		if (typeof position !== "number" || Math.floor(position) !== position) {
