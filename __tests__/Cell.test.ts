@@ -68,8 +68,8 @@ describe("Constructor", () => {
 			expect(cell2).toHaveProperty("value", 0);
 			expect(cell3).toHaveProperty("value", 0);
 		});
-		it("should initialize with possible values 1 to 9", () => {
-			const expected = new Set([1, 2, 3, 4, 5, 6, 7, 8, 9]);
+		it("should initialize with no possible values", () => {
+			const expected = new Set();
 			const cell1 = new Cell(29);
 			const cell2 = new Cell(78);
 			const cell3 = new Cell(2);

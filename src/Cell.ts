@@ -3,8 +3,10 @@ class Cell {
 	readonly row: number;
 	readonly column: number;
 	readonly box: number;
+
 	value = 0;
-	possibleValues = new Set([1, 2, 3, 4, 5, 6, 7, 8, 9]);
+	possibleValues = new Set();
+
 	constructor(position: number) {
 		if (typeof position !== "number" || Math.floor(position) !== position) {
 			throw new TypeError("Position must be an integer");
