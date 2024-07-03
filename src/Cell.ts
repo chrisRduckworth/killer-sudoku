@@ -1,4 +1,4 @@
-import Shape = require("./Shape")
+import type Shape = require("./Shape");
 
 class Cell {
 	readonly position: number;
@@ -7,7 +7,7 @@ class Cell {
 	readonly box: number;
 
 	value = 0;
-	possibleValues = new Set();
+	possibleValues: Set<number> = new Set();
 	shape!: Shape;
 	walls = [false, false, false, false]; // Going clockwise starting at north, true if a wall is present
 
