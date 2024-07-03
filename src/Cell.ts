@@ -9,6 +9,7 @@ class Cell {
 	value = 0;
 	possibleValues = new Set();
 	shape!: Shape;
+	walls = [false, false, false, false]; // Going clockwise starting at north, true if a wall is present
 
 	constructor(position: number) {
 		if (typeof position !== "number" || Math.floor(position) !== position) {
@@ -26,6 +27,24 @@ class Cell {
 		// boxs are counted 0 - 8 left to right and wrapping down
 		this.box = Math.floor((position % 9) / 3) + 3 * Math.floor(position / 27);
 	}
+
+	findWalls() {
+		// finds which walls are at the edge of a shape, for drawing with CSS
+		if (!this.shape) {
+			throw new Error("Cannot find walls without shape property");
+		}
+
+		const pos = [-9, 1, 9, -1];
+		for (let i = 0; i < pos.length; i++) {
+			if (
+				!this.shape.cells.some(
+					(cell) => cell.position === this.position + pos[i]
+				)
+			) {
+				this.walls[i] = true;
+			}
+		}
+	}
 }
 
-export = Cell
+export = Cell;

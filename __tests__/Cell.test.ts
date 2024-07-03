@@ -1,4 +1,5 @@
-import Cell = require("../src/Cell")
+import Cell = require("../src/Cell");
+import Shape = require("../src/Shape");
 
 describe("Constructor", () => {
 	describe("position property", () => {
@@ -77,5 +78,113 @@ describe("Constructor", () => {
 			expect(cell2.possibleValues).toEqual(expected);
 			expect(cell3.possibleValues).toEqual(expected);
 		});
+	});
+});
+
+describe("findWalls", () => {
+	it("should throw if no shape is currently set", () => {
+		const cell = new Cell(0);
+		expect(() => cell.findWalls()).toThrow(
+			"Cannot find walls without shape property"
+		);
+	});
+	it("should set the walls property to all 4 walls if a cell is the only one in a shape", () => {
+		const cell = new Cell(1);
+		new Shape(3, [cell]);
+
+		cell.findWalls();
+
+		expect(cell).toHaveProperty("walls");
+		expect(cell.walls).toEqual([true, true, true, true]);
+	});
+	it("should set the walls to 3 sides if the cell is sticks out of the shape", () => {
+		const expected = [
+			[true, false, true, true],
+			[true, true, true, false],
+			[true, true, false, true],
+			[false, true, true, true],
+		];
+		const cells = [new Cell(0), new Cell(1), new Cell(9), new Cell(18)];
+		new Shape(3, [cells[0], cells[1]]);
+		new Shape(3, [cells[2], cells[3]]);
+
+		cells.forEach((cell) => cell.findWalls());
+
+		expect(cells.map((cell) => cell.walls)).toEqual(expected);
+	});
+	it("should set the walls to 2 sides adjacent if the cell would have 2 sides at the edge of a shape", () => {
+		const expected = [
+			[true, false, false, true],
+			[true, true, false, false],
+			[false, false, true, true],
+			[false, true, true, false],
+		];
+		const cells = [new Cell(0), new Cell(1), new Cell(9), new Cell(10)];
+		new Shape(10, cells);
+
+		cells.forEach((cell) => cell.findWalls());
+
+		expect(cells.map((cell) => cell.walls)).toEqual(expected);
+	});
+	it("should set the walls opposite if the cell would have 2 sides opposite", () => {
+		const expected = [
+			[true, false, true, false],
+			[false, true, false, true],
+		];
+		const cells = [
+			new Cell(0),
+			new Cell(1),
+			new Cell(2),
+			new Cell(9),
+			new Cell(18),
+			new Cell(27),
+		];
+		new Shape(7, [cells[0], cells[1], cells[2]]);
+		new Shape(7, [cells[3], cells[4], cells[5]]);
+
+		cells.forEach((cell) => cell.findWalls());
+
+		expect([cells[1], cells[4]].map((cell) => cell.walls)).toEqual(expected);
+	});
+	it("should set the walls to 1 side if the cell would have 1 side at the edge of a shape", () => {
+		const expected = [
+			[true, false, false, false],
+			[false, false, false, true],
+			[false, true, false, false],
+			[false, false, true, false],
+		];
+		const cells = [
+			new Cell(0),
+			new Cell(1),
+			new Cell(2),
+			new Cell(9),
+			new Cell(10),
+			new Cell(11),
+			new Cell(18),
+			new Cell(19),
+			new Cell(20),
+		];
+		new Shape(45, cells);
+
+		cells.forEach((cell) => cell.findWalls());
+
+		expect(
+			[cells[1], cells[3], cells[5], cells[7]].map((cell) => cell.walls)
+		).toEqual(expected);
+	});
+
+	it("should keep the walls empty if the cell has no sides at the edge of the shape", () => {
+		const expected = [false, false, false, false];
+		const cells = [
+			new Cell(1),
+			new Cell(9),
+			new Cell(10),
+			new Cell(11),
+			new Cell(19),
+		]; // a cross shape
+
+		new Shape(25, cells);
+
+		expect(cells[2].walls).toEqual(expected);
 	});
 });
