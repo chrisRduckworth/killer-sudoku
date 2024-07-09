@@ -48,6 +48,70 @@ class Cell {
 			}
 		}
 	}
+
+	setIsValid() {
+		// checks the cell's row, column, box, and shape to for conflicts and sets isValid accordingly
+		this.isValid = true;
+		this.shape.isValid = true;
+
+		if (this.value === 0) {
+			const nonZeroRow = this.sudoku
+				.getRow(this.row)
+				.filter((cell) => cell.value !== 0);
+			nonZeroRow.forEach((cell) => cell.setIsValid());
+
+			const nonZeroColumn = this.sudoku
+				.getColumn(this.column)
+				.filter((cell) => cell.value !== 0);
+			nonZeroColumn.forEach((cell) => cell.setIsValid());
+
+			const nonZeroBox = this.sudoku
+				.getBox(this.box)
+				.filter((cell) => cell.value !== 0);
+			nonZeroBox.forEach((cell) => cell.setIsValid());
+
+			const nonZeroShape = this.shape.cells.filter((cell) => cell.value !== 0);
+			nonZeroShape.forEach((cell) => cell.setIsValid());
+
+			return;
+		}
+
+		const rowMatches = this.sudoku
+			.getRow(this.row)
+			.filter((cell) => cell.value === this.value);
+		if (rowMatches.length > 1) {
+			rowMatches.forEach((cell) => (cell.isValid = false));
+		}
+
+		const columnMatches = this.sudoku
+			.getColumn(this.column)
+			.filter((cell) => cell.value === this.value);
+		if (columnMatches.length > 1) {
+			columnMatches.forEach((cell) => (cell.isValid = false));
+		}
+
+		const boxMatches = this.sudoku
+			.getBox(this.box)
+			.filter((cell) => cell.value === this.value);
+		if (boxMatches.length > 1) {
+			boxMatches.forEach((cell) => (cell.isValid = false));
+		}
+
+		const shapeMatches = this.shape.cells.filter(
+			(cell) => cell.value === this.value
+		);
+		if (shapeMatches.length > 1) {
+			shapeMatches.forEach((cell) => (cell.isValid = false));
+		}
+
+		const shapeSum = this.shape.cells.reduce(
+			(sum, cell) => sum + cell.value,
+			0
+		);
+		if (shapeSum > this.shape.sum) {
+			this.shape.isValid = false;
+		}
+	}
 }
 
 export = Cell;

@@ -1,5 +1,6 @@
 import Cell = require("../src/Cell");
 import Shape = require("../src/Shape");
+import KillerSudoku = require("../src/KillerSudoku");
 
 describe("Constructor", () => {
 	describe("position property", () => {
@@ -193,5 +194,208 @@ describe("findWalls", () => {
 		new Shape(25, cells);
 
 		expect(cells[2].walls).toEqual(expected);
+	});
+});
+
+describe("setIsValid", () => {
+	const shapes: Array<[number, number[]]> = [
+		[20, [0, 1, 2, 9]],
+		[10, [3, 12, 13]],
+		[13, [4, 5]],
+		[8, [6, 7, 8]],
+		[12, [10, 19]],
+		[10, [11, 20]],
+		[26, [14, 15, 16, 17]],
+		[8, [18, 27]],
+		[23, [21, 22, 30]],
+		[16, [23, 24, 25, 26]],
+		[19, [28, 29, 38, 47]],
+		[20, [31, 40, 49, 50]],
+		[12, [32, 33]],
+		[20, [34, 35, 43, 44]],
+		[30, [36, 45, 54, 63]],
+		[10, [37, 46, 55, 64]],
+		[20, [39, 48, 57, 56]],
+		[12, [41, 42]],
+		[14, [51, 60]],
+		[8, [52, 53]],
+		[7, [58, 59]],
+		[8, [61, 62]],
+		[4, [65, 66]],
+		[20, [67, 68, 69, 78]],
+		[13, [70, 79]],
+		[10, [71, 80]],
+		[18, [72, 73, 74]],
+		[14, [75, 76, 77]],
+	];
+	it("should set isValid to true if there are no mistakes", () => {
+		const sudoku = new KillerSudoku(shapes);
+		const cell = sudoku.cells[0];
+		cell.value = 5;
+		cell.isValid = false;
+
+		cell.setIsValid();
+
+		expect(cell).toHaveProperty("isValid", true);
+	});
+	it("should set isValid to false for both cells if there is a cell in the same row with the same value", () => {
+		const sudoku = new KillerSudoku(shapes);
+		const cell1 = sudoku.cells[0];
+		const cell2 = sudoku.cells[7];
+		cell1.value = 5;
+		cell2.value = 5;
+
+		cell1.setIsValid();
+
+		expect(cell1).toHaveProperty("isValid", false);
+		expect(cell2).toHaveProperty("isValid", false);
+	});
+	it("should set isValid to false for both cells if there is a cell in the same column with the same value", () => {
+		const sudoku = new KillerSudoku(shapes);
+		const cell1 = sudoku.cells[0];
+		const cell2 = sudoku.cells[63];
+		cell1.value = 5;
+		cell2.value = 5;
+
+		cell1.setIsValid();
+
+		expect(cell1).toHaveProperty("isValid", false);
+		expect(cell2).toHaveProperty("isValid", false);
+	});
+	it("should set isValid to false for both cells if there is a cell in the same box with the same value", () => {
+		const sudoku = new KillerSudoku(shapes);
+		const cell1 = sudoku.cells[0];
+		const cell2 = sudoku.cells[20];
+		cell1.value = 5;
+		cell2.value = 5;
+
+		cell1.setIsValid();
+
+		expect(cell1).toHaveProperty("isValid", false);
+		expect(cell2).toHaveProperty("isValid", false);
+	});
+	it("should set isValid to false for both cells if there is a cell in the same shape with the same value", () => {
+		const sudoku = new KillerSudoku(shapes);
+		const cell1 = sudoku.cells[56];
+		const cell2 = sudoku.cells[39];
+		cell1.value = 5;
+		cell2.value = 5;
+
+		cell1.setIsValid();
+
+		expect(cell1).toHaveProperty("isValid", false);
+		expect(cell2).toHaveProperty("isValid", false);
+	});
+	it("should set isValid for all cells with invalid", () => {
+		const sudoku = new KillerSudoku(shapes);
+		const cell1 = sudoku.cells[56];
+		cell1.value = 3;
+		const cell2 = sudoku.cells[32];
+		cell2.value = 3;
+		const cell3 = sudoku.cells[12];
+		cell3.value = 3;
+		const cell4 = sudoku.cells[43];
+		cell4.value = 3;
+
+		const cell5 = sudoku.cells[39];
+		cell5.value = 3;
+		cell5.setIsValid();
+
+		expect(cell1).toHaveProperty("isValid", false);
+		expect(cell2).toHaveProperty("isValid", false);
+		expect(cell3).toHaveProperty("isValid", false);
+		expect(cell4).toHaveProperty("isValid", false);
+		expect(cell5).toHaveProperty("isValid", false);
+	});
+	it("should not affect cells with different values", () => {
+		const sudoku = new KillerSudoku(shapes);
+		const cell1 = sudoku.cells[56];
+		cell1.value = 3;
+		const cell2 = sudoku.cells[32];
+		cell2.value = 4;
+		const cell3 = sudoku.cells[12];
+		cell3.value = 5;
+		const cell4 = sudoku.cells[43];
+		cell4.value = 6;
+
+		const cell5 = sudoku.cells[39];
+		cell5.value = 7;
+		cell5.setIsValid();
+
+		expect(cell1).toHaveProperty("isValid", true);
+		expect(cell2).toHaveProperty("isValid", true);
+		expect(cell3).toHaveProperty("isValid", true);
+		expect(cell4).toHaveProperty("isValid", true);
+		expect(cell5).toHaveProperty("isValid", true);
+	});
+	it("should set both to true if the value is set to zero and there was previously a duplicate value", () => {
+		const sudoku = new KillerSudoku(shapes);
+		const cell1 = sudoku.cells[0];
+		const cell2 = sudoku.cells[1];
+		cell1.value = 5;
+		cell2.value = 5;
+		cell1.setIsValid();
+
+		cell1.value = 0;
+		cell1.setIsValid();
+
+		expect(cell1).toHaveProperty("isValid", true);
+		expect(cell2).toHaveProperty("isValid", true);
+	});
+	it("should not change isValid to true if a cell is set to zero but there are still duplicate values", () => {
+		const sudoku = new KillerSudoku(shapes);
+		const cell1 = sudoku.cells[0];
+		const cell2 = sudoku.cells[5];
+		const cell3 = sudoku.cells[36];
+		cell1.value = 5;
+		cell2.value = 5;
+		cell3.value = 5;
+		cell1.setIsValid();
+
+		cell2.value = 0;
+		cell2.setIsValid();
+
+		expect(cell1).toHaveProperty("isValid", false);
+		expect(cell2).toHaveProperty("isValid", true);
+		expect(cell3).toHaveProperty("isValid", false);
+	});
+	it("should set the shape isValid to false if the sum is too high", () => {
+		const sudoku = new KillerSudoku(shapes);
+		const cell1 = sudoku.cells[4];
+		const cell2 = sudoku.cells[5];
+		cell1.value = 9;
+		cell2.value = 8;
+
+		cell1.setIsValid();
+
+		expect(cell1.shape).toHaveProperty("isValid", false);
+	});
+	it("should set the shape isValid to true if the sum is set lower again", () => {
+		const sudoku = new KillerSudoku(shapes);
+		const cell1 = sudoku.cells[4];
+		const cell2 = sudoku.cells[5];
+		cell1.value = 9;
+		cell2.value = 8;
+		cell1.setIsValid();
+
+		cell1.value = 0;
+		cell1.setIsValid();
+
+		expect(cell1.shape).toHaveProperty("isValid", true);
+	});
+	it("should keep the shape isValid to false if the sum is still over after lowering", () => {
+		const sudoku = new KillerSudoku(shapes);
+		const cell1 = sudoku.cells[3];
+		const cell2 = sudoku.cells[12];
+		const cell3 = sudoku.cells[13];
+		cell1.value = 9;
+		cell2.value = 8;
+		cell3.value = 7;
+		cell1.setIsValid();
+
+		cell1.value = 0;
+		cell1.setIsValid();
+
+		expect(cell1.shape).toHaveProperty("isValid", false);
 	});
 });

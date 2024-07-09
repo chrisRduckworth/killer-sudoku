@@ -124,7 +124,7 @@ describe("Constructor", () => {
 			);
 		});
 		it("should handle complex shapes", () => {
-      // below are the shapes for a full killer sudoku:
+			// below are the shapes for a full killer sudoku:
 			const shapes: Array<[number, number[]]> = [
 				[20, [0, 1, 2, 9]],
 				[10, [3, 12, 13]],
