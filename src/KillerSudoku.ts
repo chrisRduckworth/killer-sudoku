@@ -23,15 +23,21 @@ class KillerSudoku {
 					pos.map((p) => this.cells[p])
 				)
 		);
-		this.cells.forEach((cell) => cell.findWalls());
+		this.cells.forEach((cell) => {
+      cell.sudoku = this
+      cell.findWalls()
+    });
+    this.shapes.forEach((shape) => {
+      shape.sudoku = this
+    })
 	}
 
-  getRow(n: number): Cell[] {
-    if (typeof n !== "number" || Math.floor(n) !== n || n < 0 || n >= 9) {
+	getRow(n: number): Cell[] {
+		if (typeof n !== "number" || Math.floor(n) !== n || n < 0 || n >= 9) {
 			throw new TypeError("row must be an integer between 0 and 8");
 		}
 		return this.cells.filter((cell) => cell.row === n);
-    }
+	}
 
 	getColumn(n: number): Cell[] {
 		if (typeof n !== "number" || Math.floor(n) !== n || n < 0 || n >= 9) {
@@ -45,7 +51,7 @@ class KillerSudoku {
 			throw new TypeError("box must be an integer between 0 and 8");
 		}
 		return this.cells.filter((cell) => cell.box === n);
-  }
+	}
 }
 
 export = KillerSudoku;

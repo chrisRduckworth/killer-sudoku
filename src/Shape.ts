@@ -1,8 +1,12 @@
 import Cell = require("./Cell");
+import type KillerSudoku = require("./KillerSudoku")
 
 class Shape {
 	readonly sum: number;
 	readonly cells: Cell[];
+
+  sudoku!: KillerSudoku;
+
 	constructor(sum: number, cells: Cell[]) {
 		// Cells property:
 

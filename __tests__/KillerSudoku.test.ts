@@ -59,6 +59,13 @@ describe("constructor", () => {
 				expect(sudoku.cells[i]).toHaveProperty("position", i);
 			}
 		});
+    it("should set the sudoku property on each cell", () => {
+      const sudoku = new KillerSudoku(shapes)
+
+      sudoku.cells.forEach((cell) => {
+        expect(cell).toHaveProperty("sudoku", sudoku)
+      })
+    })
 		it("should run findWalls on each cell", () => {
 			const findWallsMock = jest.spyOn(Cell.prototype, "findWalls");
 			new KillerSudoku(shapes);
@@ -129,11 +136,18 @@ describe("constructor", () => {
 
 			expect(() => new KillerSudoku(shapes2 as any)).toThrow();
 		});
+    it("should set the sudoku property for each shape", () => {
+      const sudoku = new KillerSudoku(shapes)
+
+      sudoku.shapes.forEach((shape) => {
+        expect(shape).toHaveProperty("sudoku", sudoku)
+      })
+    })
 	});
 });
 
 describe("getRow", () => {
-  it("should return 9 cells in an array", () => {
+	it("should return 9 cells in an array", () => {
 		const sudoku = new KillerSudoku(shapes);
 
 		const row = sudoku.getRow(0);
@@ -141,7 +155,7 @@ describe("getRow", () => {
 		expect(Array.isArray(row)).toBe(true);
 		expect(row).toHaveLength(9);
 	});
-  it("should return the correct cells", () => {
+	it("should return the correct cells", () => {
 		const sudoku = new KillerSudoku(shapes);
 
 		const row1 = sudoku.getRow(0);
@@ -156,21 +170,21 @@ describe("getRow", () => {
 			63, 64, 65, 66, 67, 68, 69, 70, 71,
 		]);
 	});
-  it("should throw if given an invalid row type", () => {
+	it("should throw if given an invalid row type", () => {
 		const sudoku = new KillerSudoku(shapes);
 
 		expect(() => sudoku.getRow("bananas" as any)).toThrow(
 			"row must be an integer between 0 and 8"
 		);
 	});
-  it("should throw if given a non-integer row", () => {
+	it("should throw if given a non-integer row", () => {
 		const sudoku = new KillerSudoku(shapes);
 
 		expect(() => sudoku.getRow(4.5)).toThrow(
 			"row must be an integer between 0 and 8"
 		);
 	});
-  it("should throw if given a row outside 0 and 8", () => {
+	it("should throw if given a row outside 0 and 8", () => {
 		const sudoku = new KillerSudoku(shapes);
 
 		expect(() => sudoku.getRow(-2)).toThrow(
@@ -183,7 +197,7 @@ describe("getRow", () => {
 });
 
 describe("getColumn", () => {
-  it("should return 9 cells in an array", () => {
+	it("should return 9 cells in an array", () => {
 		const sudoku = new KillerSudoku(shapes);
 
 		const column = sudoku.getColumn(0);
@@ -191,7 +205,7 @@ describe("getColumn", () => {
 		expect(Array.isArray(column)).toBe(true);
 		expect(column).toHaveLength(9);
 	});
-  it("should return the correct cells", () => {
+	it("should return the correct cells", () => {
 		const sudoku = new KillerSudoku(shapes);
 
 		const column1 = sudoku.getColumn(0);
@@ -208,21 +222,21 @@ describe("getColumn", () => {
 			7, 16, 25, 34, 43, 52, 61, 70, 79,
 		]);
 	});
-  it("should throw if given an invalid column type", () => {
+	it("should throw if given an invalid column type", () => {
 		const sudoku = new KillerSudoku(shapes);
 
 		expect(() => sudoku.getColumn("bananas" as any)).toThrow(
 			"column must be an integer between 0 and 8"
 		);
 	});
-  it("should throw if given a non-integer column", () => {
+	it("should throw if given a non-integer column", () => {
 		const sudoku = new KillerSudoku(shapes);
 
 		expect(() => sudoku.getColumn(4.5)).toThrow(
 			"column must be an integer between 0 and 8"
 		);
 	});
-  it("should throw if given a column outside 0 and 8", () => {
+	it("should throw if given a column outside 0 and 8", () => {
 		const sudoku = new KillerSudoku(shapes);
 
 		expect(() => sudoku.getColumn(-2)).toThrow(

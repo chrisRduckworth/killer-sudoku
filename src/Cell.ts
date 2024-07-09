@@ -1,4 +1,5 @@
 import type Shape = require("./Shape");
+import type KillerSudoku = require("./KillerSudoku")
 
 class Cell {
 	readonly position: number;
@@ -10,6 +11,7 @@ class Cell {
 	possibleValues: Set<number> = new Set();
 	shape!: Shape;
 	walls = [false, false, false, false]; // Going clockwise starting at north, true if a wall is present
+  sudoku!: KillerSudoku
 
 	constructor(position: number) {
 		if (typeof position !== "number" || Math.floor(position) !== position) {
