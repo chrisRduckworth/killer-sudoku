@@ -30,7 +30,14 @@ class KillerSudoku {
     if (typeof n !== "number" || Math.floor(n) !== n || n < 0 || n >= 9) {
       throw new TypeError("row must be an integer between 0 and 8")
     }
-    return this.cells.filter((cell) => cell.row === n)
+
+	getColumn(n: number): Cell[] {
+		if (typeof n !== "number" || Math.floor(n) !== n || n < 0 || n >= 9) {
+			throw new TypeError("column must be an integer between 0 and 8");
+		}
+		return this.cells.filter((cell) => cell.column === n);
+	}
+
   }
 }
 
