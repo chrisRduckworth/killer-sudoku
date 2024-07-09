@@ -79,6 +79,13 @@ describe("Constructor", () => {
 			expect(cell3.possibleValues).toEqual(expected);
 		});
 	});
+	describe("isValid property", () => {
+		it("should initialize with the isValid property", () => {
+			const cell = new Cell(0);
+
+			expect(cell).toHaveProperty("isValid", true);
+		});
+	});
 });
 
 describe("findWalls", () => {

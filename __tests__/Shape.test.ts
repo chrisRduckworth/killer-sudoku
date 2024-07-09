@@ -61,15 +61,15 @@ describe("Constructor", () => {
 
 			expect(shape.cells).toEqual(cells);
 		});
-    it("should set the shape property of each of the given cells", () => {
+		it("should set the shape property of each of the given cells", () => {
 			const cells = [new Cell(0), new Cell(1), new Cell(2)];
 
 			const shape = new Shape(10, cells);
 
-      expect(cells[0]).toHaveProperty("shape", shape)
-      expect(cells[1]).toHaveProperty("shape", shape)
-      expect(cells[2]).toHaveProperty("shape", shape)
-    })
+			expect(cells[0]).toHaveProperty("shape", shape);
+			expect(cells[1]).toHaveProperty("shape", shape);
+			expect(cells[2]).toHaveProperty("shape", shape);
+		});
 		it("should only accept an array of Cells", () => {
 			expect(() => new Shape(4, "bananas" as any)).toThrow(TypeError);
 			expect(() => new Shape(7, [9, 2, 5] as any)).toThrow(TypeError);
@@ -160,6 +160,14 @@ describe("Constructor", () => {
 				const shape = new Shape(s[0], cells);
 				expect(shape.cells).toEqual(cells);
 			}
+		});
+	});
+	describe("isValid property", () => {
+		it("should initialize with isValid set to true", () => {
+			const cell = new Cell(0);
+			const shape = new Shape(5, [cell]);
+
+			expect(shape.isValid).toBe(true);
 		});
 	});
 });

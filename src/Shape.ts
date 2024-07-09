@@ -1,11 +1,12 @@
 import Cell = require("./Cell");
-import type KillerSudoku = require("./KillerSudoku")
+import type KillerSudoku = require("./KillerSudoku");
 
 class Shape {
 	readonly sum: number;
 	readonly cells: Cell[];
 
-  sudoku!: KillerSudoku;
+	sudoku!: KillerSudoku;
+	isValid = true;
 
 	constructor(sum: number, cells: Cell[]) {
 		// Cells property:
