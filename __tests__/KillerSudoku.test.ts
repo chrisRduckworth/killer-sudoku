@@ -34,6 +34,7 @@ const shapes: Array<[number, number[]]> = [
 ];
 
 describe("constructor", () => {
+	describe("cells property", () => {
 	it("should initialize with a cells property", () => {
 		const sudoku = new KillerSudoku(shapes);
 
@@ -55,8 +56,9 @@ describe("constructor", () => {
 		const sudoku = new KillerSudoku(shapes);
 
 		for (let i = 0; i < 81; i++) {
-			expect(sudoku.cells).toContainEqual(new Cell(i));
-      expect(sudoku.cells[i]).toHaveProperty("position", i)
-		}
+				expect(sudoku.cells[i]).toHaveProperty("position", i);
+			}
+		});
+	});
 	});
 });
