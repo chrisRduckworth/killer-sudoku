@@ -1,6 +1,6 @@
 import KillerSudoku = require("../src/KillerSudoku");
 import Cell = require("../src/Cell");
-import Shape = require("../src/Shape")
+import Shape = require("../src/Shape");
 
 const shapes: Array<[number, number[]]> = [
 	[20, [0, 1, 2, 9]],
@@ -35,30 +35,93 @@ const shapes: Array<[number, number[]]> = [
 
 describe("constructor", () => {
 	describe("cells property", () => {
-	it("should initialize with a cells property", () => {
-		const sudoku = new KillerSudoku(shapes);
+		it("should initialize with a cells property", () => {
+			const sudoku = new KillerSudoku(shapes);
 
-		expect(sudoku).toHaveProperty("cells");
-	});
-	it("should initialize with 81 cells", () => {
-		const sudoku = new KillerSudoku(shapes);
-
-		expect(sudoku.cells).toHaveLength(81);
-	});
-	it("each cell should be a cell instance", () => {
-		const sudoku = new KillerSudoku(shapes);
-
-		sudoku.cells.forEach((cell) => {
-			expect(cell).toBeInstanceOf(Cell);
+			expect(sudoku).toHaveProperty("cells");
 		});
-	});
-	it("each cell should have different position from 0 thru 80", () => {
-		const sudoku = new KillerSudoku(shapes);
+		it("should initialize with 81 cells", () => {
+			const sudoku = new KillerSudoku(shapes);
 
-		for (let i = 0; i < 81; i++) {
+			expect(sudoku.cells).toHaveLength(81);
+		});
+		it("each cell should be a cell instance", () => {
+			const sudoku = new KillerSudoku(shapes);
+
+			sudoku.cells.forEach((cell) => {
+				expect(cell).toBeInstanceOf(Cell);
+			});
+		});
+		it("each cell should have different position from 0 thru 80", () => {
+			const sudoku = new KillerSudoku(shapes);
+
+			for (let i = 0; i < 81; i++) {
 				expect(sudoku.cells[i]).toHaveProperty("position", i);
 			}
 		});
 	});
+	describe("shapes property", () => {
+		it("should initialize with a shapes property", () => {
+			const sudoku = new KillerSudoku(shapes);
+
+			expect(sudoku).toHaveProperty("shapes");
+		});
+		it("shapes should be an array of shape objects", () => {
+			const sudoku = new KillerSudoku(shapes);
+
+			expect(Array.isArray(sudoku.shapes)).toBe(true);
+			sudoku.shapes.forEach((shape) => {
+				expect(shape).toBeInstanceOf(Shape);
+			});
+		});
+		it("shapes should have same length as input", () => {
+			const sudoku = new KillerSudoku(shapes);
+
+			expect(sudoku.shapes).toHaveLength(shapes.length);
+		});
+		it("each shape should be initialized correctly", () => {
+			const sudoku = new KillerSudoku(shapes);
+
+			shapes.forEach(([sum, pos], i) => {
+				expect(sudoku.shapes[i]).toHaveProperty("sum", sum);
+				expect(sudoku.shapes[i].cells.map((c) => c.position)).toEqual(pos);
+			});
+		});
+		it("should throw if not all cells have shapes", () => {
+			const shapes: Array<[number, number[]]> = [
+				[6, [0, 1, 2]],
+				[10, [3, 4, 5, 6]],
+			];
+
+			expect(() => new KillerSudoku(shapes)).toThrow(
+				"each cell must have a shape"
+			);
+		});
+		it("should throw if a cell has more than one shape", () => {
+			const shapes2 = JSON.parse(JSON.stringify(shapes));
+			shapes2.push([6, [1, 2, 3]]);
+
+			expect(() => new KillerSudoku(shapes2)).toThrow(
+				"each cell cannot have more than one cell"
+			);
+		});
+		it("should throw if given invalid cell positions", () => {
+			const shapes2 = JSON.parse(JSON.stringify(shapes));
+			shapes2.push([6, ["bananas"]]);
+
+			expect(() => new KillerSudoku(shapes2)).toThrow();
+
+			shapes2.pop();
+			shapes2.push([6, [-1, -2]]);
+
+			expect(() => new KillerSudoku(shapes2)).toThrow();
+		});
+		it("should throw if given an invalid shape", () => {
+			const shapes2 = JSON.parse(JSON.stringify(shapes));
+			shapes2.pop();
+			shapes2.push("bananas");
+
+			expect(() => new KillerSudoku(shapes2 as any)).toThrow();
+		});
 	});
 });
