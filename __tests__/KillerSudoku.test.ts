@@ -216,7 +216,55 @@ describe("getColumn", () => {
   it("should throw if given a column outside 0 and 8", () => {
     const sudoku = new KillerSudoku(shapes)
 
-    expect(() => sudoku.getColumn(-2)).toThrow("column must be an integer between 0 and 8")
-    expect(() => sudoku.getColumn(11)).toThrow("column must be an integer between 0 and 8")
-  })
-})
+
+describe("getBox", () => {
+	it("should return 9 cells in an array", () => {
+		const sudoku = new KillerSudoku(shapes);
+
+		const box = sudoku.getBox(0);
+
+		expect(Array.isArray(box)).toBe(true);
+		expect(box).toHaveLength(9);
+	});
+	it("should return the correct cells", () => {
+		const sudoku = new KillerSudoku(shapes);
+
+		const box1 = sudoku.getBox(0);
+		const box2 = sudoku.getBox(5);
+		const box3 = sudoku.getBox(7);
+
+		expect(box1.map((c) => c.position)).toEqual([
+			0, 1, 2, 9, 10, 11, 18, 19, 20,
+		]);
+		expect(box2.map((c) => c.position)).toEqual([
+			33, 34, 35, 42, 43, 44, 51, 52, 53,
+		]);
+		expect(box3.map((c) => c.position)).toEqual([
+			57, 58, 59, 66, 67, 68, 75, 76, 77,
+		]);
+	});
+	it("should throw if given an invalid box type", () => {
+		const sudoku = new KillerSudoku(shapes);
+
+		expect(() => sudoku.getBox("bananas" as any)).toThrow(
+			"box must be an integer between 0 and 8"
+		);
+	});
+	it("should throw if given a non-integer box", () => {
+		const sudoku = new KillerSudoku(shapes);
+
+		expect(() => sudoku.getBox(4.5)).toThrow(
+			"box must be an integer between 0 and 8"
+		);
+	});
+	it("should throw if given a box outside 0 and 8", () => {
+		const sudoku = new KillerSudoku(shapes);
+
+		expect(() => sudoku.getBox(-2)).toThrow(
+			"box must be an integer between 0 and 8"
+		);
+		expect(() => sudoku.getBox(11)).toThrow(
+			"box must be an integer between 0 and 8"
+		);
+	});
+});

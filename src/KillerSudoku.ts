@@ -40,6 +40,11 @@ class KillerSudoku {
 		return this.cells.filter((cell) => cell.column === n);
 	}
 
+	getBox(n: number): Cell[] {
+		if (typeof n !== "number" || Math.floor(n) !== n || n < 0 || n >= 9) {
+			throw new TypeError("box must be an integer between 0 and 8");
+		}
+		return this.cells.filter((cell) => cell.box === n);
   }
 }
 
