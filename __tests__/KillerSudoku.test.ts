@@ -131,3 +131,42 @@ describe("constructor", () => {
 		});
 	});
 });
+
+describe("getRow", () => {
+  it("should return 9 cells in an array", () => {
+    const sudoku = new KillerSudoku(shapes)
+
+    const row = sudoku.getRow(0)
+
+    expect(Array.isArray(row)).toBe(true)
+    expect(row).toHaveLength(9)
+  })
+  it("should return the correct cells", () => {
+    const sudoku = new KillerSudoku(shapes)
+
+    const row1 = sudoku.getRow(0)
+    const row2 = sudoku.getRow(3)
+    const row3 = sudoku.getRow(7)
+
+    expect(row1.map((c) => c.position)).toEqual([0,1,2,3,4,5,6,7,8])
+    expect(row2.map((c) => c.position)).toEqual([27,28,29,30,31,32,33,34,35])
+    expect(row3.map((c) => c.position)).toEqual([63,64,65,66,67,68,69,70,71])
+
+  })
+  it("should throw if given an invalid row type", () => {
+    const sudoku = new KillerSudoku(shapes)
+
+    expect(() => sudoku.getRow("bananas" as any)).toThrow("row must be an integer between 0 and 8")
+  })
+  it("should throw if given a non-integer row", () => {
+    const sudoku = new KillerSudoku(shapes)
+
+    expect(() => sudoku.getRow(4.5)).toThrow("row must be an integer between 0 and 8")
+  })
+  it("should throw if given a row outside 0 and 8", () => {
+    const sudoku = new KillerSudoku(shapes)
+
+    expect(() => sudoku.getRow(-2)).toThrow("row must be an integer between 0 and 8")
+    expect(() => sudoku.getRow(11)).toThrow("row must be an integer between 0 and 8")
+  })
+})
