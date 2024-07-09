@@ -23,6 +23,7 @@ class KillerSudoku {
 					pos.map((p) => this.cells[p])
 				)
 		);
+		this.cells.forEach((cell) => cell.findWalls());
 	}
 }
 

@@ -59,6 +59,12 @@ describe("constructor", () => {
 				expect(sudoku.cells[i]).toHaveProperty("position", i);
 			}
 		});
+		it("should run findWalls on each cell", () => {
+			const findWallsMock = jest.spyOn(Cell.prototype, "findWalls");
+			new KillerSudoku(shapes);
+
+			expect(findWallsMock).toHaveBeenCalledTimes(81);
+		});
 	});
 	describe("shapes property", () => {
 		it("should initialize with a shapes property", () => {
