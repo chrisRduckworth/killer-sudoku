@@ -1,37 +1,7 @@
 import KillerSudoku = require("../src/KillerSudoku");
 import Cell = require("../src/Cell");
 import Shape = require("../src/Shape");
-
-const shapes: Array<[number, number[]]> = [
-	[20, [0, 1, 2, 9]],
-	[10, [3, 12, 13]],
-	[13, [4, 5]],
-	[8, [6, 7, 8]],
-	[12, [10, 19]],
-	[10, [11, 20]],
-	[26, [14, 15, 16, 17]],
-	[8, [18, 27]],
-	[23, [21, 22, 30]],
-	[16, [23, 24, 25, 26]],
-	[19, [28, 29, 38, 47]],
-	[20, [31, 40, 49, 50]],
-	[12, [32, 33]],
-	[20, [34, 35, 43, 44]],
-	[30, [36, 45, 54, 63]],
-	[10, [37, 46, 55, 64]],
-	[20, [39, 48, 57, 56]],
-	[12, [41, 42]],
-	[14, [51, 60]],
-	[8, [52, 53]],
-	[7, [58, 59]],
-	[8, [61, 62]],
-	[4, [65, 66]],
-	[20, [67, 68, 69, 78]],
-	[13, [70, 79]],
-	[10, [71, 80]],
-	[18, [72, 73, 74]],
-	[14, [75, 76, 77]],
-];
+const shapes: Array<[number, number[]]> = require("./shapes");
 
 describe("constructor", () => {
 	describe("cells property", () => {
@@ -59,13 +29,13 @@ describe("constructor", () => {
 				expect(sudoku.cells[i]).toHaveProperty("position", i);
 			}
 		});
-    it("should set the sudoku property on each cell", () => {
-      const sudoku = new KillerSudoku(shapes)
+		it("should set the sudoku property on each cell", () => {
+			const sudoku = new KillerSudoku(shapes);
 
-      sudoku.cells.forEach((cell) => {
-        expect(cell).toHaveProperty("sudoku", sudoku)
-      })
-    })
+			sudoku.cells.forEach((cell) => {
+				expect(cell).toHaveProperty("sudoku", sudoku);
+			});
+		});
 		it("should run findWalls on each cell", () => {
 			const findWallsMock = jest.spyOn(Cell.prototype, "findWalls");
 			new KillerSudoku(shapes);
@@ -136,13 +106,13 @@ describe("constructor", () => {
 
 			expect(() => new KillerSudoku(shapes2 as any)).toThrow();
 		});
-    it("should set the sudoku property for each shape", () => {
-      const sudoku = new KillerSudoku(shapes)
+		it("should set the sudoku property for each shape", () => {
+			const sudoku = new KillerSudoku(shapes);
 
-      sudoku.shapes.forEach((shape) => {
-        expect(shape).toHaveProperty("sudoku", sudoku)
-      })
-    })
+			sudoku.shapes.forEach((shape) => {
+				expect(shape).toHaveProperty("sudoku", sudoku);
+			});
+		});
 	});
 });
 
