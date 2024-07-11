@@ -370,3 +370,120 @@ describe("setIsValid", () => {
 		expect(cell1.shape).toHaveProperty("isValid", false);
 	});
 });
+
+describe("setValue", () => {
+	it("should set the value property", () => {
+		const sudoku = new KillerSudoku(shapes);
+		const cell = sudoku.cells[0];
+
+		for (let i = 0; i < 10; i++) {
+			cell.setValue(i);
+			expect(cell).toHaveProperty("value", i);
+		}
+	});
+	it("should throw if given wrong type", () => {
+		const sudoku = new KillerSudoku(shapes);
+		const cell = sudoku.cells[0];
+
+		expect(() => cell.setValue("bananas" as any)).toThrow(
+			"value must be an integer between 0 and 9"
+		);
+	});
+	it("should throw if given non-integer type", () => {
+		const sudoku = new KillerSudoku(shapes);
+		const cell = sudoku.cells[0];
+
+		expect(() => cell.setValue(4.5)).toThrow(
+			"value must be an integer between 0 and 9"
+		);
+	});
+	it("should throw if given integer outside range type", () => {
+		const sudoku = new KillerSudoku(shapes);
+		const cell = sudoku.cells[0];
+
+		expect(() => cell.setValue(-3)).toThrow(
+			"value must be an integer between 0 and 9"
+		);
+		expect(() => cell.setValue(11)).toThrow(
+			"value must be an integer between 0 and 9"
+		);
+	});
+	it("should remove the value from possible values of cells in the same row", () => {
+		const sudoku = new KillerSudoku(shapes);
+		const cell1 = sudoku.cells[0];
+		const cell2 = sudoku.cells[3];
+		const cell3 = sudoku.cells[7];
+
+		cell2.possibleValues.add(1);
+		cell3.possibleValues.add(1);
+
+		cell1.setValue(1);
+
+		expect(cell2.possibleValues).toEqual(new Set());
+		expect(cell3.possibleValues).toEqual(new Set());
+	});
+	it("should remove the value from possible values of cells in the same column", () => {
+		const sudoku = new KillerSudoku(shapes);
+		const cell1 = sudoku.cells[5];
+		const cell2 = sudoku.cells[32];
+		const cell3 = sudoku.cells[77];
+
+		cell2.possibleValues.add(5);
+		cell3.possibleValues.add(5);
+
+		cell1.setValue(5);
+
+		expect(cell2.possibleValues).toEqual(new Set());
+		expect(cell3.possibleValues).toEqual(new Set());
+	});
+	it("should remove the value from possible values of cells in the same box", () => {
+		const sudoku = new KillerSudoku(shapes);
+		const cell1 = sudoku.cells[30];
+		const cell2 = sudoku.cells[40];
+		const cell3 = sudoku.cells[50];
+
+		cell2.possibleValues.add(7);
+		cell3.possibleValues.add(7);
+
+		cell1.setValue(7);
+
+		expect(cell2.possibleValues).toEqual(new Set());
+		expect(cell3.possibleValues).toEqual(new Set());
+	});
+	it("should remove the value from possible values of cells in the same shape", () => {
+		const sudoku = new KillerSudoku(shapes);
+		const cell1 = sudoku.cells[39];
+		const cell2 = sudoku.cells[56];
+
+		cell2.possibleValues.add(8);
+
+		cell1.setValue(8);
+
+		expect(cell2.possibleValues).toEqual(new Set());
+	});
+	it("should set isValid in case of conflict", () => {
+		const sudoku = new KillerSudoku(shapes);
+		const cell1 = sudoku.cells[0];
+		const cell2 = sudoku.cells[4];
+		cell2.setValue(5);
+		const setIsValidMock = jest.spyOn(Cell.prototype, "setIsValid");
+
+		cell1.setValue(5);
+
+		expect(setIsValidMock).toHaveBeenCalled();
+		expect(cell1).toHaveProperty("isValid", false);
+		expect(cell2).toHaveProperty("isValid", false);
+	});
+	it("should set isValid to true if there is no longer a conflict", () => {
+		const sudoku = new KillerSudoku(shapes);
+		const cell1 = sudoku.cells[0];
+		const cell2 = sudoku.cells[4];
+		cell1.setValue(5);
+		cell2.setValue(5);
+
+		cell1.setValue(6);
+
+		expect(cell1).toHaveProperty("isValid", true);
+		expect(cell2).toHaveProperty("isValid", true);
+	});
+});

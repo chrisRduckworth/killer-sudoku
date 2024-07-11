@@ -112,6 +112,31 @@ class Cell {
 			this.shape.isValid = false;
 		}
 	}
+
+	setValue(n: number) {
+		if (typeof n !== "number" || Math.floor(n) !== n || n < 0 || n >= 10) {
+			throw TypeError("value must be an integer between 0 and 9");
+		}
+
+		// remove n from possibleValues of cells in the same row/column/box/shape
+		const row = this.sudoku.getRow(this.row);
+		row.forEach((cell) => cell.possibleValues.delete(n));
+
+		const column = this.sudoku.getColumn(this.column);
+		column.forEach((cell) => cell.possibleValues.delete(n));
+
+		const box = this.sudoku.getBox(this.box);
+		box.forEach((cell) => cell.possibleValues.delete(n));
+
+		this.shape.cells.forEach((cell) => cell.possibleValues.delete(n));
+
+		this.value = 0;
+		this.setIsValid();
+		if (n !== 0) {
+			this.value = n;
+			this.setIsValid();
+		}
+	}
 }
 
 export = Cell;

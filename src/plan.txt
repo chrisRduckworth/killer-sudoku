@@ -30,6 +30,7 @@ METHODS:
 constructor - takes position. calculates column, row, box. Sets value to 0, and possible Values to {1,...,9}
 findWalls - sets the wall property
 setIsValid - checks the current cell against the others in the same row/column/box/shape to see if there are conflicts. If there are, isValid is set to false for each of those cells. Also checks if the shapeSum is valid and sets that
+setValue - set the value of the cell. Removes the value from possiblevalues in the other cells in same row/column/box/shape. Checks validity with setIsValid. Leaves possible values in place? Yeah.
 
 Do I want a row/column/box properties? They can technically be generated from the position but it might just be easier to do it this way. Though it is slightly less memory efficient, but is more readable.
 
