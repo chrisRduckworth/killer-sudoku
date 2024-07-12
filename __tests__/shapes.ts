@@ -30,4 +30,4 @@ const shapes: Array<[number, number[]]> = [
 	[14, [75, 76, 77]],
 ];
 
-module.exports = shapes;
+export default shapes;

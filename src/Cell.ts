@@ -1,5 +1,5 @@
-import type Shape = require("./Shape");
-import type KillerSudoku = require("./KillerSudoku");
+import type Shape from "./Shape";
+import type KillerSudoku from "./KillerSudoku";
 
 class Cell {
 	readonly position: number;
@@ -139,4 +139,4 @@ class Cell {
 	}
 }
 
-export = Cell;
+export default Cell;

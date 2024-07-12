@@ -1,7 +1,7 @@
-import Cell = require("../src/Cell");
-import Shape = require("../src/Shape");
-import KillerSudoku = require("../src/KillerSudoku");
-const shapes: Array<[number, number[]]> = require("./shapes");
+import Cell from "../src/Cell";
+import Shape from "../src/Shape";
+import KillerSudoku from "../src/KillerSudoku";
+import shapes from "./shapes";
 
 describe("Constructor", () => {
 	describe("position property", () => {

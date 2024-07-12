@@ -1,5 +1,5 @@
-import Cell = require("./Cell");
-import type KillerSudoku = require("./KillerSudoku");
+import Cell from "./Cell";
+import type KillerSudoku from "./KillerSudoku";
 
 class Shape {
 	readonly sum: number;
@@ -86,4 +86,4 @@ class Shape {
 	}
 }
 
-export = Shape;
+export default Shape;

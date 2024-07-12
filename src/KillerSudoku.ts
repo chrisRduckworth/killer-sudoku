@@ -1,5 +1,5 @@
-import Cell = require("./Cell");
-import Shape = require("./Shape");
+import Cell from "./Cell";
+import Shape from "./Shape";
 
 class KillerSudoku {
 	readonly cells: Cell[];
@@ -24,12 +24,12 @@ class KillerSudoku {
 				)
 		);
 		this.cells.forEach((cell) => {
-      cell.sudoku = this
-      cell.findWalls()
-    });
-    this.shapes.forEach((shape) => {
-      shape.sudoku = this
-    })
+			cell.sudoku = this;
+			cell.findWalls();
+		});
+		this.shapes.forEach((shape) => {
+			shape.sudoku = this;
+		});
 	}
 
 	getRow(n: number): Cell[] {
@@ -54,4 +54,4 @@ class KillerSudoku {
 	}
 }
 
-export = KillerSudoku;
+export default KillerSudoku;

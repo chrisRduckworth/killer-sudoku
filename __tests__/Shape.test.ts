@@ -1,6 +1,6 @@
-import Shape = require("../src/Shape");
-import Cell = require("../src/Cell");
-const shapes: Array<[number, number[]]> = require("./shapes");
+import Cell from "../src/Cell";
+import Shape from "../src/Shape";
+import shapes from "./shapes";
 
 describe("Constructor", () => {
 	describe("Sum property", () => {
