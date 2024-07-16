@@ -13,6 +13,7 @@ class Cell {
 	walls = [false, false, false, false]; // Going clockwise starting at north, true if a wall is present
 	isValid = true;
 	sudoku!: KillerSudoku;
+	element!: HTMLTableCellElement;
 
 	constructor(position: number) {
 		if (typeof position !== "number" || Math.floor(position) !== position) {
@@ -73,6 +74,8 @@ class Cell {
 			const nonZeroShape = this.shape.cells.filter((cell) => cell.value !== 0);
 			nonZeroShape.forEach((cell) => cell.setIsValid());
 
+			this.render();
+
 			return;
 		}
 
@@ -80,28 +83,51 @@ class Cell {
 			.getRow(this.row)
 			.filter((cell) => cell.value === this.value);
 		if (rowMatches.length > 1) {
-			rowMatches.forEach((cell) => (cell.isValid = false));
+			rowMatches.forEach((cell) => {
+				cell.isValid = false;
+				if (cell.position !== this.position) {
+					cell.render;
+				}
+			});
 		}
 
 		const columnMatches = this.sudoku
 			.getColumn(this.column)
 			.filter((cell) => cell.value === this.value);
 		if (columnMatches.length > 1) {
-			columnMatches.forEach((cell) => (cell.isValid = false));
+			// columnMatches.forEach((cell) => (cell.isValid = false));
+			columnMatches.forEach((cell) => {
+				cell.isValid = false;
+				if (cell.position !== this.position) {
+					cell.render;
+				}
+			});
 		}
 
 		const boxMatches = this.sudoku
 			.getBox(this.box)
 			.filter((cell) => cell.value === this.value);
 		if (boxMatches.length > 1) {
-			boxMatches.forEach((cell) => (cell.isValid = false));
+			// boxMatches.forEach((cell) => (cell.isValid = false));
+			boxMatches.forEach((cell) => {
+				cell.isValid = false;
+				if (cell.position !== this.position) {
+					cell.render;
+				}
+			});
 		}
 
 		const shapeMatches = this.shape.cells.filter(
 			(cell) => cell.value === this.value
 		);
 		if (shapeMatches.length > 1) {
-			shapeMatches.forEach((cell) => (cell.isValid = false));
+			// shapeMatches.forEach((cell) => (cell.isValid = false));
+			shapeMatches.forEach((cell) => {
+				cell.isValid = false;
+				if (cell.position !== this.position) {
+					cell.render;
+				}
+			});
 		}
 
 		const shapeSum = this.shape.cells.reduce(
@@ -111,6 +137,7 @@ class Cell {
 		if (shapeSum > this.shape.sum) {
 			this.shape.isValid = false;
 		}
+		this.render();
 	}
 
 	setValue(n: number) {
@@ -135,6 +162,36 @@ class Cell {
 		if (n !== 0) {
 			this.value = n;
 			this.setIsValid();
+		}
+	}
+
+	render() {
+		// updates the html element with current cell info
+		// first clear out the current children
+		this.element.replaceChildren();
+		this.element.innerText = "";
+		if (this.value > 0) {
+			// then the value has been set and that's what needs to be shown
+			this.element.innerText = `${this.value}`;
+		} else if (this.possibleValues.size > 0) {
+			// we need to display the list of possible values
+			const possValsSorted = [...this.possibleValues.values()].sort((a, b) =>
+				a < b ? -1 : 1
+			);
+			const possValsList = document.createElement("ol");
+			for (const val of possValsSorted) {
+				const item = document.createElement("li");
+				item.innerText = `${val}`;
+				possValsList.appendChild(item);
+			}
+			this.element.appendChild(possValsList);
+		}
+		// if there are neither value or possVals then it is left blank
+
+		if (!this.isValid) {
+			this.element.classList.add("invalid");
+		} else {
+			this.element.classList.remove("invalid");
 		}
 	}
 }
