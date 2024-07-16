@@ -4,7 +4,7 @@ import Shape from "./Shape";
 class KillerSudoku {
 	readonly cells: Cell[];
 	readonly shapes: Shape[];
-	currCell!: Cell;
+	currCell: Cell | undefined = undefined;
 	notes = false;
 
 	constructor(shapes: Array<[number, number[]]>) {
