@@ -114,6 +114,11 @@ describe("constructor", () => {
 			});
 		});
 	});
+	it("should initialize with a currCell property", () => {
+		const sudoku = new KillerSudoku(shapes);
+
+		expect(sudoku).toHaveProperty("currCell");
+	});
 });
 
 describe("getRow", () => {
