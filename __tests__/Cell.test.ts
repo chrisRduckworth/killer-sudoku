@@ -665,3 +665,32 @@ describe("render", () => {
     expect(renderMock).toHaveBeenCalled()
   })
 });
+
+describe("setPossVal", () => {
+  it("should add the value to the possible values list if it is not there", () => {
+    const cell = new Cell(0)
+    cell.element = document.createElement("td")
+
+    cell.setPossVal(1)
+
+    expect(cell.possibleValues).toEqual(new Set([1]))
+  })
+  it("should remove the value from the possible values if it is already present", () => {
+    const cell = new Cell(0)
+    cell.element = document.createElement("td")
+    cell.possibleValues.add(5)
+
+    cell.setPossVal(5)
+
+    expect(cell.possibleValues).toEqual(new Set())
+  })
+  it("should run render", () => {
+    const cell = new Cell(0)
+    cell.element = document.createElement("td")
+    const renderMock = jest.spyOn(Cell.prototype, "render")
+
+    cell.setPossVal(4)
+
+    expect(renderMock).toHaveBeenCalled()
+  })
+})

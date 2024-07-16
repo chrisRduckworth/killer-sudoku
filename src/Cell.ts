@@ -194,6 +194,16 @@ class Cell {
 			this.element.classList.remove("invalid");
 		}
 	}
+
+	setPossVal(n: number) {
+		if (this.possibleValues.has(n)) {
+			this.possibleValues.delete(n);
+		} else {
+			this.possibleValues.add(n);
+		}
+		this.render();
+		return;
+	}
 }
 
 export default Cell;
