@@ -1,0 +1,16 @@
+#sudoku, tr, td {
+  border: 1px solid black;
+}
+
+td {
+  width:30px;
+  height:30px
+}
+
+.selected-value {
+  background-color: aquamarine;
+}
+
+.selected-notes {
+  background: linear-gradient(135deg, aquamarine 30%, white 30%);
+}
