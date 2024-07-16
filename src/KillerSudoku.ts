@@ -4,7 +4,8 @@ import Shape from "./Shape";
 class KillerSudoku {
 	readonly cells: Cell[];
 	readonly shapes: Shape[];
-	currCell!: number;
+	currCell!: Cell;
+	notes = false;
 
 	constructor(shapes: Array<[number, number[]]>) {
 		const positions = shapes.map(([_s, pos]) => pos).flat();

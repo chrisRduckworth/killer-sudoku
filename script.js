@@ -34,3 +34,31 @@ const shapes = [
 const sudoku = new KillerSudoku(shapes);
 
 const elements = [...document.getElementsByTagName("td")];
+
+elements.forEach((element, i) => {
+	sudoku.cells[i].element = element;
+	element.addEventListener("click", (e) => {
+    // for clicking on current cell to switch between notes and values
+		if (sudoku.currCell && sudoku.currCell.position === i) {
+			sudoku.notes = !sudoku.notes;
+			if (sudoku.notes) {
+				element.classList.remove("selected-value");
+				element.classList.add("selected-notes");
+			} else {
+				element.classList.remove("selected-notes");
+				element.classList.add("selected-value");
+			}
+		}
+
+    // for first click:
+    if (sudoku.currCell === undefined) {
+      sudoku.currCell = sudoku.cells[i]
+    }
+
+    // for clicking from one cell to another
+    const className = sudoku.notes ? "selected-notes" : "selected-value"
+    sudoku.currCell.element.classList.remove(className)
+    sudoku.currCell = sudoku.cells[i]
+    element.classList.add(className)
+	});
+});
