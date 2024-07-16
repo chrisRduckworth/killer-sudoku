@@ -202,7 +202,7 @@ describe("setIsValid", () => {
 	it("should set isValid to true if there are no mistakes", () => {
 		const sudoku = new KillerSudoku(shapes);
 		const cell = sudoku.cells[0];
-    cell.element = document.createElement("td")
+		cell.element = document.createElement("td");
 		cell.value = 5;
 		cell.isValid = false;
 
@@ -214,9 +214,9 @@ describe("setIsValid", () => {
 		const sudoku = new KillerSudoku(shapes);
 		const cell1 = sudoku.cells[0];
 		const cell2 = sudoku.cells[7];
-    cell1.element = document.createElement("td")
+		cell1.element = document.createElement("td");
 		cell1.value = 5;
-    cell2.element = document.createElement("td")
+		cell2.element = document.createElement("td");
 		cell2.value = 5;
 
 		cell1.setIsValid();
@@ -228,9 +228,9 @@ describe("setIsValid", () => {
 		const sudoku = new KillerSudoku(shapes);
 		const cell1 = sudoku.cells[0];
 		const cell2 = sudoku.cells[63];
-    cell1.element = document.createElement("td")
+		cell1.element = document.createElement("td");
 		cell1.value = 5;
-    cell2.element = document.createElement("td")
+		cell2.element = document.createElement("td");
 		cell2.value = 5;
 
 		cell1.setIsValid();
@@ -242,9 +242,9 @@ describe("setIsValid", () => {
 		const sudoku = new KillerSudoku(shapes);
 		const cell1 = sudoku.cells[0];
 		const cell2 = sudoku.cells[20];
-    cell1.element = document.createElement("td")
+		cell1.element = document.createElement("td");
 		cell1.value = 5;
-    cell2.element = document.createElement("td")
+		cell2.element = document.createElement("td");
 		cell2.value = 5;
 
 		cell1.setIsValid();
@@ -256,9 +256,9 @@ describe("setIsValid", () => {
 		const sudoku = new KillerSudoku(shapes);
 		const cell1 = sudoku.cells[56];
 		const cell2 = sudoku.cells[39];
-    cell1.element = document.createElement("td")
+		cell1.element = document.createElement("td");
 		cell1.value = 5;
-    cell2.element = document.createElement("td")
+		cell2.element = document.createElement("td");
 		cell2.value = 5;
 
 		cell1.setIsValid();
@@ -269,20 +269,20 @@ describe("setIsValid", () => {
 	it("should set isValid for all cells with invalid", () => {
 		const sudoku = new KillerSudoku(shapes);
 		const cell1 = sudoku.cells[56];
-    cell1.element = document.createElement("td")
+		cell1.element = document.createElement("td");
 		cell1.value = 3;
 		const cell2 = sudoku.cells[32];
-    cell2.element = document.createElement("td")
+		cell2.element = document.createElement("td");
 		cell2.value = 3;
 		const cell3 = sudoku.cells[12];
-    cell3.element = document.createElement("td")
+		cell3.element = document.createElement("td");
 		cell3.value = 3;
 		const cell4 = sudoku.cells[43];
-    cell4.element = document.createElement("td")
+		cell4.element = document.createElement("td");
 		cell4.value = 3;
 
 		const cell5 = sudoku.cells[39];
-    cell5.element = document.createElement("td")
+		cell5.element = document.createElement("td");
 		cell5.value = 3;
 		cell5.setIsValid();
 
@@ -295,20 +295,20 @@ describe("setIsValid", () => {
 	it("should not affect cells with different values", () => {
 		const sudoku = new KillerSudoku(shapes);
 		const cell1 = sudoku.cells[56];
-    cell1.element = document.createElement("td")
+		cell1.element = document.createElement("td");
 		cell1.value = 3;
 		const cell2 = sudoku.cells[32];
-    cell2.element = document.createElement("td")
+		cell2.element = document.createElement("td");
 		cell2.value = 4;
 		const cell3 = sudoku.cells[12];
-    cell3.element = document.createElement("td")
+		cell3.element = document.createElement("td");
 		cell3.value = 5;
 		const cell4 = sudoku.cells[43];
-    cell4.element = document.createElement("td")
+		cell4.element = document.createElement("td");
 		cell4.value = 6;
 
 		const cell5 = sudoku.cells[39];
-    cell5.element = document.createElement("td")
+		cell5.element = document.createElement("td");
 		cell5.value = 7;
 		cell5.setIsValid();
 
@@ -322,9 +322,9 @@ describe("setIsValid", () => {
 		const sudoku = new KillerSudoku(shapes);
 		const cell1 = sudoku.cells[0];
 		const cell2 = sudoku.cells[1];
-    cell1.element = document.createElement("td")
+		cell1.element = document.createElement("td");
 		cell1.value = 5;
-    cell2.element = document.createElement("td")
+		cell2.element = document.createElement("td");
 		cell2.value = 5;
 		cell1.setIsValid();
 
@@ -339,11 +339,11 @@ describe("setIsValid", () => {
 		const cell1 = sudoku.cells[0];
 		const cell2 = sudoku.cells[5];
 		const cell3 = sudoku.cells[36];
-    cell1.element = document.createElement("td")
+		cell1.element = document.createElement("td");
 		cell1.value = 5;
-    cell2.element = document.createElement("td")
+		cell2.element = document.createElement("td");
 		cell2.value = 5;
-    cell3.element = document.createElement("td")
+		cell3.element = document.createElement("td");
 		cell3.value = 5;
 		cell1.setIsValid();
 
@@ -358,9 +358,9 @@ describe("setIsValid", () => {
 		const sudoku = new KillerSudoku(shapes);
 		const cell1 = sudoku.cells[4];
 		const cell2 = sudoku.cells[5];
-    cell1.element = document.createElement("td")
+		cell1.element = document.createElement("td");
 		cell1.value = 9;
-    cell2.element = document.createElement("td")
+		cell2.element = document.createElement("td");
 		cell2.value = 8;
 
 		cell1.setIsValid();
@@ -371,9 +371,9 @@ describe("setIsValid", () => {
 		const sudoku = new KillerSudoku(shapes);
 		const cell1 = sudoku.cells[4];
 		const cell2 = sudoku.cells[5];
-    cell1.element = document.createElement("td")
+		cell1.element = document.createElement("td");
 		cell1.value = 9;
-    cell2.element = document.createElement("td")
+		cell2.element = document.createElement("td");
 		cell2.value = 8;
 		cell1.setIsValid();
 
@@ -387,11 +387,11 @@ describe("setIsValid", () => {
 		const cell1 = sudoku.cells[3];
 		const cell2 = sudoku.cells[12];
 		const cell3 = sudoku.cells[13];
-    cell1.element = document.createElement("td")
+		cell1.element = document.createElement("td");
 		cell1.value = 9;
-    cell2.element = document.createElement("td")
+		cell2.element = document.createElement("td");
 		cell2.value = 8;
-    cell3.element = document.createElement("td")
+		cell3.element = document.createElement("td");
 		cell3.value = 7;
 		cell1.setIsValid();
 
@@ -406,7 +406,7 @@ describe("setValue", () => {
 	it("should set the value property", () => {
 		const sudoku = new KillerSudoku(shapes);
 		const cell = sudoku.cells[0];
-    cell.element = document.createElement("td")
+		cell.element = document.createElement("td");
 
 		for (let i = 0; i < 10; i++) {
 			cell.setValue(i);
@@ -416,7 +416,7 @@ describe("setValue", () => {
 	it("should throw if given wrong type", () => {
 		const sudoku = new KillerSudoku(shapes);
 		const cell = sudoku.cells[0];
-    cell.element = document.createElement("td")
+		cell.element = document.createElement("td");
 
 		expect(() => cell.setValue("bananas" as any)).toThrow(
 			"value must be an integer between 0 and 9"
@@ -425,7 +425,7 @@ describe("setValue", () => {
 	it("should throw if given non-integer type", () => {
 		const sudoku = new KillerSudoku(shapes);
 		const cell = sudoku.cells[0];
-    cell.element = document.createElement("td")
+		cell.element = document.createElement("td");
 
 		expect(() => cell.setValue(4.5)).toThrow(
 			"value must be an integer between 0 and 9"
@@ -434,7 +434,7 @@ describe("setValue", () => {
 	it("should throw if given integer outside range type", () => {
 		const sudoku = new KillerSudoku(shapes);
 		const cell = sudoku.cells[0];
-    cell.element = document.createElement("td")
+		cell.element = document.createElement("td");
 
 		expect(() => cell.setValue(-3)).toThrow(
 			"value must be an integer between 0 and 9"
@@ -448,9 +448,9 @@ describe("setValue", () => {
 		const cell1 = sudoku.cells[0];
 		const cell2 = sudoku.cells[3];
 		const cell3 = sudoku.cells[7];
-    cell1.element = document.createElement("td")
-    cell2.element = document.createElement("td")
-    cell3.element = document.createElement("td")
+		cell1.element = document.createElement("td");
+		cell2.element = document.createElement("td");
+		cell3.element = document.createElement("td");
 
 		cell2.possibleValues.add(1);
 		cell3.possibleValues.add(1);
@@ -465,9 +465,9 @@ describe("setValue", () => {
 		const cell1 = sudoku.cells[5];
 		const cell2 = sudoku.cells[32];
 		const cell3 = sudoku.cells[77];
-    cell1.element = document.createElement("td")
-    cell2.element = document.createElement("td")
-    cell3.element = document.createElement("td")
+		cell1.element = document.createElement("td");
+		cell2.element = document.createElement("td");
+		cell3.element = document.createElement("td");
 
 		cell2.possibleValues.add(5);
 		cell3.possibleValues.add(5);
@@ -482,9 +482,9 @@ describe("setValue", () => {
 		const cell1 = sudoku.cells[30];
 		const cell2 = sudoku.cells[40];
 		const cell3 = sudoku.cells[50];
-    cell1.element = document.createElement("td")
-    cell2.element = document.createElement("td")
-    cell3.element = document.createElement("td")
+		cell1.element = document.createElement("td");
+		cell2.element = document.createElement("td");
+		cell3.element = document.createElement("td");
 
 		cell2.possibleValues.add(7);
 		cell3.possibleValues.add(7);
@@ -498,8 +498,8 @@ describe("setValue", () => {
 		const sudoku = new KillerSudoku(shapes);
 		const cell1 = sudoku.cells[39];
 		const cell2 = sudoku.cells[56];
-    cell1.element = document.createElement("td")
-    cell2.element = document.createElement("td")
+		cell1.element = document.createElement("td");
+		cell2.element = document.createElement("td");
 
 		cell2.possibleValues.add(8);
 
@@ -511,8 +511,8 @@ describe("setValue", () => {
 		const sudoku = new KillerSudoku(shapes);
 		const cell1 = sudoku.cells[0];
 		const cell2 = sudoku.cells[4];
-    cell1.element = document.createElement("td")
-    cell2.element = document.createElement("td")
+		cell1.element = document.createElement("td");
+		cell2.element = document.createElement("td");
 		cell2.setValue(5);
 		const setIsValidMock = jest.spyOn(Cell.prototype, "setIsValid");
 
@@ -526,8 +526,8 @@ describe("setValue", () => {
 		const sudoku = new KillerSudoku(shapes);
 		const cell1 = sudoku.cells[0];
 		const cell2 = sudoku.cells[4];
-    cell1.element = document.createElement("td")
-    cell2.element = document.createElement("td")
+		cell1.element = document.createElement("td");
+		cell2.element = document.createElement("td");
 		cell1.setValue(5);
 		cell2.setValue(5);
 
@@ -540,157 +540,171 @@ describe("setValue", () => {
 
 describe("render", () => {
 	it("should set the node empty if there are no possible values or value", () => {
-    const sudoku = new KillerSudoku(shapes)
-		const cell = sudoku.cells[0]
-    cell.element = document.createElement("td")
+		const sudoku = new KillerSudoku(shapes);
+		const cell = sudoku.cells[0];
+		cell.element = document.createElement("td");
 
-    cell.render()
+		cell.render();
 
-    expect(cell.element.hasChildNodes()).toBe(false)
-    expect(cell.element.innerText).toBeFalsy()
+		expect(cell.element.hasChildNodes()).toBe(false);
+		expect(cell.element.innerText).toBeFalsy();
 	});
-  it("should set the element to the value of the cell if one is present", () => {
-    const sudoku = new KillerSudoku(shapes)
-		const cell = sudoku.cells[0]
-    cell.element = document.createElement("td")
-    cell.render()
+	it("should set the element to the value of the cell if one is present", () => {
+		const sudoku = new KillerSudoku(shapes);
+		const cell = sudoku.cells[0];
+		cell.element = document.createElement("td");
+		cell.render();
 
-    cell.value = 5
-    cell.render()
+		cell.value = 5;
+		cell.render();
 
-    expect(cell.element.hasChildNodes()).toBe(false)
-    expect(cell.element.innerText).toBe("5")
-  })
-  it("should set the element to a list of possible values if no value is present", () => {
-    const sudoku = new KillerSudoku(shapes)
-		const cell = sudoku.cells[0]
-    cell.element = document.createElement("td")
-    cell.possibleValues.add(1)
-    cell.possibleValues.add(6)
-    cell.possibleValues.add(9)
+		expect(cell.element.hasChildNodes()).toBe(false);
+		expect(cell.element.innerText).toBe("5");
+	});
+	it("should set the element to a list of possible values if no value is present", () => {
+		const sudoku = new KillerSudoku(shapes);
+		const cell = sudoku.cells[0];
+		cell.element = document.createElement("td");
+		cell.possibleValues.add(1);
+		cell.possibleValues.add(6);
+		cell.possibleValues.add(9);
 
-    cell.render()
+		cell.render();
 
-    expect(cell.element.childNodes.length).toBe(1)
-    expect(cell.element.firstChild!.childNodes.length).toBe(3)
-    expect((cell.element.firstChild!.childNodes[0] as HTMLElement).innerText).toBe("1")
-    expect((cell.element.firstChild!.childNodes[1] as HTMLElement).innerText).toBe("6")
-    expect((cell.element.firstChild!.childNodes[2] as HTMLElement).innerText).toBe("9")
-  })
-  it("should set the element to the value if one is present even if there are possible values", () => {
-    const sudoku = new KillerSudoku(shapes)
-		const cell = sudoku.cells[0]
-    cell.element = document.createElement("td")
-    cell.possibleValues.add(1)
-    cell.possibleValues.add(6)
-    cell.possibleValues.add(9)
-    cell.render()
+		expect(cell.element.childNodes.length).toBe(1);
+		expect(cell.element.firstChild!.childNodes.length).toBe(3);
+		expect(
+			(cell.element.firstChild!.childNodes[0] as HTMLElement).innerText
+		).toBe("1");
+		expect(
+			(cell.element.firstChild!.childNodes[1] as HTMLElement).innerText
+		).toBe("6");
+		expect(
+			(cell.element.firstChild!.childNodes[2] as HTMLElement).innerText
+		).toBe("9");
+	});
+	it("should set the element to the value if one is present even if there are possible values", () => {
+		const sudoku = new KillerSudoku(shapes);
+		const cell = sudoku.cells[0];
+		cell.element = document.createElement("td");
+		cell.possibleValues.add(1);
+		cell.possibleValues.add(6);
+		cell.possibleValues.add(9);
+		cell.render();
 
-    cell.value = 5
-    cell.render()
+		cell.value = 5;
+		cell.render();
 
-    expect(cell.element.hasChildNodes()).toBe(false)
-    expect(cell.element.innerText).toBe("5")
-  })
-  it("should remove the value if it is set to 0", () => {
-    const sudoku = new KillerSudoku(shapes)
-		const cell = sudoku.cells[0]
-    cell.element = document.createElement("td")
-    cell.value = 5
-    cell.render()
-    
-    cell.value = 0
-    cell.render()
+		expect(cell.element.hasChildNodes()).toBe(false);
+		expect(cell.element.innerText).toBe("5");
+	});
+	it("should remove the value if it is set to 0", () => {
+		const sudoku = new KillerSudoku(shapes);
+		const cell = sudoku.cells[0];
+		cell.element = document.createElement("td");
+		cell.value = 5;
+		cell.render();
 
-    expect(cell.element.hasChildNodes()).toBe(false)
-    expect(cell.element.innerText).toBeFalsy()
-  })
-  it("should return to possible values if value is set to 0", () => {
-    const sudoku = new KillerSudoku(shapes)
-		const cell = sudoku.cells[0]
-    cell.element = document.createElement("td")
-    cell.possibleValues.add(1)
-    cell.possibleValues.add(7)
-    cell.possibleValues.add(4)
-    cell.possibleValues.add(2)
-    cell.value = 5
-    cell.render()
+		cell.value = 0;
+		cell.render();
 
-    cell.value = 0
-    cell.render()
+		expect(cell.element.hasChildNodes()).toBe(false);
+		expect(cell.element.innerText).toBeFalsy();
+	});
+	it("should return to possible values if value is set to 0", () => {
+		const sudoku = new KillerSudoku(shapes);
+		const cell = sudoku.cells[0];
+		cell.element = document.createElement("td");
+		cell.possibleValues.add(1);
+		cell.possibleValues.add(7);
+		cell.possibleValues.add(4);
+		cell.possibleValues.add(2);
+		cell.value = 5;
+		cell.render();
 
-    expect(cell.element.childNodes.length).toBe(1)
-    expect(cell.element.firstChild!.childNodes.length).toBe(4)
-    expect((cell.element.firstChild!.childNodes[0] as HTMLElement).innerText).toBe("1")
-    expect((cell.element.firstChild!.childNodes[1] as HTMLElement).innerText).toBe("2")
-    expect((cell.element.firstChild!.childNodes[2] as HTMLElement).innerText).toBe("4")
-    expect((cell.element.firstChild!.childNodes[3] as HTMLElement).innerText).toBe("7")
-  })
-  it("should add class invalid if isValid is set to false", () => {
-    const sudoku = new KillerSudoku(shapes)
-		const cell = sudoku.cells[0]
-    cell.element = document.createElement("td")
-    cell.value = 4
-    cell.isValid = false
+		cell.value = 0;
+		cell.render();
 
-    cell.render() 
+		expect(cell.element.childNodes.length).toBe(1);
+		expect(cell.element.firstChild!.childNodes.length).toBe(4);
+		expect(
+			(cell.element.firstChild!.childNodes[0] as HTMLElement).innerText
+		).toBe("1");
+		expect(
+			(cell.element.firstChild!.childNodes[1] as HTMLElement).innerText
+		).toBe("2");
+		expect(
+			(cell.element.firstChild!.childNodes[2] as HTMLElement).innerText
+		).toBe("4");
+		expect(
+			(cell.element.firstChild!.childNodes[3] as HTMLElement).innerText
+		).toBe("7");
+	});
+	it("should add class invalid if isValid is set to false", () => {
+		const sudoku = new KillerSudoku(shapes);
+		const cell = sudoku.cells[0];
+		cell.element = document.createElement("td");
+		cell.value = 4;
+		cell.isValid = false;
 
-    expect(cell.element.classList.contains("invalid")).toBe(true)
-  })
-  it("should remove class invalid if it is set to true", () => {
-    const sudoku = new KillerSudoku(shapes)
-		const cell = sudoku.cells[0]
-    cell.element = document.createElement("td")
-    cell.value = 4
-    cell.isValid = false
-    cell.render() 
+		cell.render();
 
-    cell.isValid = true
-    cell.render()
+		expect(cell.element.classList.contains("invalid")).toBe(true);
+	});
+	it("should remove class invalid if it is set to true", () => {
+		const sudoku = new KillerSudoku(shapes);
+		const cell = sudoku.cells[0];
+		cell.element = document.createElement("td");
+		cell.value = 4;
+		cell.isValid = false;
+		cell.render();
 
-    expect(cell.element.classList.contains("invalid")).toBe(false)
-  })
-  it("should be run when setIsValid is called", () => {
-    const sudoku = new KillerSudoku(shapes)
-		const cell1 = sudoku.cells[0]
-    const cell2 = sudoku.cells[4]
-    cell1.element = document.createElement("td")
-    cell1.value = 4
-    cell2.element = document.createElement("td")
-    cell2.value = 4
-    const renderMock = jest.spyOn(Cell.prototype, "render")
+		cell.isValid = true;
+		cell.render();
 
-    cell1.setIsValid()
+		expect(cell.element.classList.contains("invalid")).toBe(false);
+	});
+	it("should be run when setIsValid is called", () => {
+		const sudoku = new KillerSudoku(shapes);
+		const cell1 = sudoku.cells[0];
+		const cell2 = sudoku.cells[4];
+		cell1.element = document.createElement("td");
+		cell1.value = 4;
+		cell2.element = document.createElement("td");
+		cell2.value = 4;
+		const renderMock = jest.spyOn(Cell.prototype, "render");
 
-    expect(renderMock).toHaveBeenCalled()
-  })
+		cell1.setIsValid();
+
+		expect(renderMock).toHaveBeenCalled();
+	});
 });
 
 describe("setPossVal", () => {
-  it("should add the value to the possible values list if it is not there", () => {
-    const cell = new Cell(0)
-    cell.element = document.createElement("td")
+	it("should add the value to the possible values list if it is not there", () => {
+		const cell = new Cell(0);
+		cell.element = document.createElement("td");
 
-    cell.setPossVal(1)
+		cell.setPossVal(1);
 
-    expect(cell.possibleValues).toEqual(new Set([1]))
-  })
-  it("should remove the value from the possible values if it is already present", () => {
-    const cell = new Cell(0)
-    cell.element = document.createElement("td")
-    cell.possibleValues.add(5)
+		expect(cell.possibleValues).toEqual(new Set([1]));
+	});
+	it("should remove the value from the possible values if it is already present", () => {
+		const cell = new Cell(0);
+		cell.element = document.createElement("td");
+		cell.possibleValues.add(5);
 
-    cell.setPossVal(5)
+		cell.setPossVal(5);
 
-    expect(cell.possibleValues).toEqual(new Set())
-  })
-  it("should run render", () => {
-    const cell = new Cell(0)
-    cell.element = document.createElement("td")
-    const renderMock = jest.spyOn(Cell.prototype, "render")
+		expect(cell.possibleValues).toEqual(new Set());
+	});
+	it("should run render", () => {
+		const cell = new Cell(0);
+		cell.element = document.createElement("td");
+		const renderMock = jest.spyOn(Cell.prototype, "render");
 
-    cell.setPossVal(4)
+		cell.setPossVal(4);
 
-    expect(renderMock).toHaveBeenCalled()
-  })
-})
+		expect(renderMock).toHaveBeenCalled();
+	});
+});
