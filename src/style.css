@@ -1,0 +1,88 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+
+#sudoku {
+	border: 5px solid black;
+	border-collapse: collapse;
+	table-layout: fixed;
+}
+
+td {
+	width: 60px;
+	height: 60px;
+	border: 1px solid black;
+	text-align: center;
+	font-size: x-large;
+}
+
+td > div {
+  position: relative;
+  width: 60px;
+  height: 60px;
+}
+
+.thick-col {
+  border-right: 5px solid black;
+}
+
+.thick-row {
+  border-bottom: 5px solid black;
+}
+
+.walls-holder {
+	height: 100%;
+	width: 100%;
+	margin: 0;
+	box-sizing: border-box;
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+.walls {
+	height: 100%;
+	width: 100%;
+	box-sizing: border-box;
+}
+
+div:has(> .north) {
+	padding-top: 5px;
+}
+
+.north {
+	border-top: 2px dashed black;
+}
+
+div:has(> .west) {
+	padding-left: 5px;
+}
+
+.west {
+	border-left: 2px dashed black;
+}
+
+div:has(> .south) {
+	padding-bottom: 5px;
+}
+
+.south {
+	border-bottom: 2px dashed black;
+}
+
+div:has(> .east) {
+	padding-right: 5px;
+}
+
+.east {
+	border-right: 2px dashed black;
+}
+
+/* .selected-value {
+	background-color: aquamarine;
+}
+
+.selected-notes {
+	background: linear-gradient(135deg, aquamarine 30%, white 30%);
+} */
