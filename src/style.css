@@ -34,7 +34,6 @@ td > div {
 .walls-holder {
 	height: 100%;
 	width: 100%;
-	margin: 0;
 	box-sizing: border-box;
 	position: absolute;
 	top: 0;
@@ -47,7 +46,7 @@ td > div {
 	box-sizing: border-box;
 }
 
-div:has(> .north) {
+.walls-holder:has(> .north) {
 	padding-top: 5px;
 }
 
@@ -55,7 +54,7 @@ div:has(> .north) {
 	border-top: 2px dashed black;
 }
 
-div:has(> .west) {
+.walls-holder:has(> .west) {
 	padding-left: 5px;
 }
 
@@ -63,7 +62,7 @@ div:has(> .west) {
 	border-left: 2px dashed black;
 }
 
-div:has(> .south) {
+.walls-holder:has(> .south) {
 	padding-bottom: 5px;
 }
 
@@ -71,7 +70,7 @@ div:has(> .south) {
 	border-bottom: 2px dashed black;
 }
 
-div:has(> .east) {
+.walls-holder:has(> .east) {
 	padding-right: 5px;
 }
 
@@ -79,10 +78,13 @@ div:has(> .east) {
 	border-right: 2px dashed black;
 }
 
-/* .selected-value {
-	background-color: aquamarine;
+.sum {
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	font-size: medium;
+	background-color: white;
+	padding: 2px;
+	z-index: 1;
+	width: 18px;
 }
-
-.selected-notes {
-	background: linear-gradient(135deg, aquamarine 30%, white 30%);
-} */
