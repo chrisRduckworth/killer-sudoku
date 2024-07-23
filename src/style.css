@@ -88,3 +88,29 @@ td > div {
 	z-index: 1;
 	width: 18px;
 }
+
+.corner {
+	position: absolute;
+	width: 5px;
+	height: 5px;
+}
+
+.corner-bottom {
+	bottom: 0px;
+	border-top: 2px dashed black;
+}
+
+.corner-left {
+	left: 0px;
+	border-right: 2px dashed black;
+}
+
+.corner-top {
+	top: 0px;
+	border-bottom: 2px dashed black;
+}
+
+.corner-right {
+	right: 0px;
+	border-left: 2px dashed black;
+}
