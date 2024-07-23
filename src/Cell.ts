@@ -204,6 +204,26 @@ class Cell {
 		this.render();
 		return;
 	}
+
+	draw() {
+		const hasSum =
+			this.position ===
+			Math.min(...this.shape.cells.map((cell) => cell.position));
+
+		this.element.innerHTML = `<div>
+      <div class="walls-holder">
+        <div class="walls
+          ${this.walls[0] && "north "} 
+          ${this.walls[1] && "east "} 
+          ${this.walls[2] && "south "} 
+          ${this.walls[3] && "west "} 
+          ">
+        </div>
+      </div>
+      ${hasSum && '<label class="sum">' + this.shape.sum + "</label>"}
+      <ol class="possible-values"></ol>
+    </div>`;
+	}
 }
 
 export default Cell;

@@ -708,3 +708,119 @@ describe("setPossVal", () => {
 		expect(renderMock).toHaveBeenCalled();
 	});
 });
+
+describe("drawCell", () => {
+	it("should add a div element directly inside because firefox is a pissy bitch that doesn't like a td having position: relative for some ungodly reason", () => {
+		const cell = new Cell(0);
+		cell.element = document.createElement("td");
+		new Shape(5, [cell]);
+
+		cell.draw();
+
+		expect(cell.element.childElementCount).toBe(1);
+		expect(cell.element.firstElementChild).not.toBeNull();
+		expect(cell.element.firstElementChild!.tagName).toBe("DIV");
+	});
+	it("should have a div which holds the div with walls", () => {
+		const cell = new Cell(0);
+		cell.element = document.createElement("td");
+		new Shape(5, [cell]);
+
+		cell.draw();
+		const div = cell.element.firstElementChild!;
+		const wallsHolder = div.firstElementChild;
+
+		expect(wallsHolder).not.toBeNull();
+		expect(wallsHolder!.tagName).toBe("DIV");
+		expect(wallsHolder!.classList.contains("walls-holder")).toBe(true);
+	});
+	it("should have the div with walls", () => {
+		const cell = new Cell(0);
+		cell.element = document.createElement("td");
+		new Shape(5, [cell]);
+
+		cell.draw();
+		const div = cell.element.firstElementChild!;
+		const wallsHolder = div.firstElementChild!;
+		const walls = wallsHolder.firstElementChild;
+		expect(walls).not.toBe(null);
+		expect(walls!.tagName).toBe("DIV");
+		expect(walls!.classList.contains("walls")).toBe(true);
+	});
+	it("should add classes to walls depending on if the cell has those walls", () => {
+		const cell = new Cell(0);
+		cell.element = document.createElement("td");
+		new Shape(5, [cell]);
+		cell.walls = [true, false, false, true];
+
+		cell.draw();
+		const walls =
+			cell.element.firstElementChild!.firstElementChild!.firstElementChild!;
+
+		expect(walls.classList.contains("north")).toBe(true);
+		expect(walls.classList.contains("east")).toBe(false);
+		expect(walls.classList.contains("south")).toBe(false);
+		expect(walls.classList.contains("west")).toBe(true);
+
+		const cell2 = new Cell(1);
+		cell2.element = document.createElement("td");
+		new Shape(5, [cell2]);
+		cell2.walls = [false, true, true, true];
+
+		cell2.draw();
+		const walls2 =
+			cell2.element.firstElementChild!.firstElementChild!.firstElementChild!;
+
+		expect(walls2.classList.contains("north")).toBe(false);
+		expect(walls2.classList.contains("east")).toBe(true);
+		expect(walls2.classList.contains("south")).toBe(true);
+		expect(walls2.classList.contains("west")).toBe(true);
+	});
+	it("should create a list element for possible values", () => {
+		const cell = new Cell(0);
+		cell.element = document.createElement("td");
+		new Shape(5, [cell]);
+
+		cell.draw();
+		const list = cell.element.firstElementChild!.children[2];
+
+		expect(list).not.toBeUndefined();
+		expect(list!.tagName).toBe("OL");
+		expect(list!.classList.contains("possible-values")).toBe(true);
+	});
+	it("should add a sum element if the cell is the top left of the shape", () => {
+		const cell = new Cell(0);
+		cell.element = document.createElement("td");
+		new Shape(17, [cell, new Cell(1), new Cell(9)]);
+
+		cell.draw();
+
+		const label = cell.element.firstElementChild!.children[1];
+
+		expect(label).not.toBeUndefined();
+		expect(label!.tagName).toBe("LABEL");
+		expect(label!.classList.contains("sum")).toBe(true);
+	});
+	it("should set the sum inner text to the sum of the shape", () => {
+		const cell = new Cell(0);
+		cell.element = document.createElement("td");
+		new Shape(17, [cell, new Cell(1), new Cell(9)]);
+
+		cell.draw();
+
+		const label = cell.element.firstElementChild!.children[1] as HTMLElement;
+		expect(label.textContent).toBe("17");
+	});
+	it("should not have a label element if the cell is not the top left cell of the shape", () => {
+		const cell = new Cell(9);
+		cell.element = document.createElement("td");
+		new Shape(20, [cell, new Cell(0), new Cell(1)]);
+
+		cell.draw();
+		const div = cell.element.firstElementChild!;
+
+		Array.from(div.children).forEach((child) => {
+			expect(child.tagName).not.toBe("LABEL");
+		});
+	});
+});
