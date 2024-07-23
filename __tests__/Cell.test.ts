@@ -780,6 +780,7 @@ describe("drawCell", () => {
 		const cell = new Cell(0);
 		cell.element = document.createElement("td");
 		new Shape(5, [cell]);
+		cell.findWalls();
 
 		cell.draw();
 		const list = cell.element.firstElementChild!.children[2];
@@ -792,10 +793,11 @@ describe("drawCell", () => {
 		const cell = new Cell(0);
 		cell.element = document.createElement("td");
 		new Shape(17, [cell, new Cell(1), new Cell(9)]);
+		cell.findWalls();
 
 		cell.draw();
 
-		const label = cell.element.firstElementChild!.children[1];
+		const label = cell.element.firstElementChild!.children[2];
 
 		expect(label).not.toBeUndefined();
 		expect(label!.tagName).toBe("LABEL");
@@ -805,10 +807,11 @@ describe("drawCell", () => {
 		const cell = new Cell(0);
 		cell.element = document.createElement("td");
 		new Shape(17, [cell, new Cell(1), new Cell(9)]);
+		cell.findWalls();
 
 		cell.draw();
 
-		const label = cell.element.firstElementChild!.children[1] as HTMLElement;
+		const label = cell.element.firstElementChild!.children[2] as HTMLElement;
 		expect(label.textContent).toBe("17");
 	});
 	it("should not have a label element if the cell is not the top left cell of the shape", () => {
@@ -821,6 +824,81 @@ describe("drawCell", () => {
 
 		Array.from(div.children).forEach((child) => {
 			expect(child.tagName).not.toBe("LABEL");
+		});
+	});
+	it("should add corners when there are two adjacent walls and no cell opposite", () => {
+		const cells = [new Cell(0), new Cell(1), new Cell(10), new Cell(9)];
+		new Shape(20, [cells[0], new Cell(1), new Cell(9)]);
+		new Shape(20, [cells[1], new Cell(0), new Cell(10)]);
+		new Shape(20, [cells[2], new Cell(1), new Cell(9)]);
+		new Shape(20, [cells[3], new Cell(10), new Cell(0)]);
+
+		cells.forEach((cell) => {
+			cell.element = document.createElement("td");
+			cell.findWalls();
+			cell.draw();
+		});
+
+		const corners = cells.map(
+			(cell) => cell.element.firstElementChild!.children[1]
+		);
+		const expectedCorners = [
+			["bottom", "right"],
+			["bottom", "left"],
+			["top", "left"],
+			["top", "right"],
+		];
+
+		corners.forEach((corner, i) => {
+			expect(corner).not.toBeUndefined();
+			expect(corner.tagName).toBe("DIV");
+			expect(corner.classList.contains("corner")).toBe(true);
+			const dirs = ["left", "bottom", "top", "right"];
+			dirs.forEach((dir) => {
+				expect(corner.classList.contains(`corner-${dir}`)).toBe(
+					expectedCorners[i].includes(dir)
+				);
+			});
+		});
+	});
+	it("should not add a corner if there cell does not have two adjacent sides", () => {
+		const cells = [
+			new Cell(0),
+			new Cell(1),
+			new Cell(9),
+			new Cell(18),
+			new Cell(27),
+			new Cell(2),
+			new Cell(3),
+		];
+		new Shape(5, [cells[0]]); // four walls
+		new Shape(10, [new Cell(0), cells[1], new Cell(2)]); // top and bottom walls
+		new Shape(10, [new Cell(0), cells[2], new Cell(18)]); // l and r walls
+		new Shape(16, [cells[3], cells[4]]); // 3 walls
+		new Shape(16, [cells[5], cells[6]]); // 3 walls
+		cells.forEach((cell) => {
+			cell.element = document.createElement("td");
+			cell.findWalls();
+			cell.draw();
+
+			const children = [...cell.element.firstElementChild!.children];
+			children.forEach((element) => {
+				expect(element.classList.contains("corner")).toBe(false);
+			});
+		});
+	});
+	it("should not add a corner if there are two adjacent walls but the opposite cell is part of the same shape", () => {
+		const cells = [new Cell(0), new Cell(1), new Cell(9), new Cell(10)];
+		new Shape(20, cells);
+		cells.forEach((cell) => {
+			cell.element = document.createElement("td");
+			cell.findWalls();
+			cell.draw();
+
+			const children = [...cell.element.firstElementChild!.children];
+			children.forEach((element) => {
+				expect(element.classList.contains("corner")).toBe(false);
+			});
 		});
 	});
 });

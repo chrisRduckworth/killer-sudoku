@@ -206,10 +206,30 @@ class Cell {
 	}
 
 	draw() {
+		// there is a sum if the element is the top left of the shape
+		// <=> it has the lowest position
 		const hasSum =
 			this.position ===
 			Math.min(...this.shape.cells.map((cell) => cell.position));
 
+		// there is a corner if there are exactly 2 walls
+		// the walls are adjacent (i.e. not opposite)
+		// the cell across from this one is not in the shape
+		const wallsLength = this.walls.filter((w) => w).length;
+		const opposite =
+			(this.walls[0] && this.walls[2]) || (this.walls[1] && this.walls[3]);
+		let hasCorner = false;
+		if (wallsLength === 2 && !opposite) {
+			const cellMod = [9, -1, -9, 1];
+			const cellDiagPosition = cellMod.reduce(
+				(acc, c, i) => acc + (this.walls[i] ? c : 0),
+				this.position
+			);
+			const shapePositions = this.shape.cells.map((cell) => cell.position);
+			if (!shapePositions.includes(cellDiagPosition)) {
+				hasCorner = true;
+			}
+		}
 
 		this.element.innerHTML = `<div>
       <div class="walls-holder">
@@ -221,10 +241,22 @@ class Cell {
           ">
         </div>
       </div>
-      ${hasSum ? '<label class="sum">' + this.shape.sum + "</label>" : ""}
-      <ol class="possible-values"></ol>
-    </div>`;
-		// NEED CORNERS
+		</div>`;
+
+		if (hasCorner) {
+			this.element.firstElementChild!.innerHTML += `<div class="corner 
+				 ${this.walls[0] ? "corner-bottom " : ""}
+         ${this.walls[1] ? "corner-left " : ""}
+         ${this.walls[2] ? "corner-top " : ""}
+         ${this.walls[3] ? "corner-right " : ""}
+			"></div>`;
+		}
+
+		if (hasSum) {
+			this.element.firstElementChild!.innerHTML += `<label class="sum">${this.shape.sum}</label>`;
+		}
+
+		this.element.firstElementChild!.innerHTML += `<ol class="possible-values"></ol>`;
 	}
 }
 
