@@ -210,13 +210,14 @@ class Cell {
 			this.position ===
 			Math.min(...this.shape.cells.map((cell) => cell.position));
 
+
 		this.element.innerHTML = `<div>
       <div class="walls-holder">
         <div class="walls
-          ${this.walls[0] ? "north " : ""} 
-          ${this.walls[1] ? "east " : ""} 
-          ${this.walls[2] ? "south " : ""} 
-          ${this.walls[3] ? "west " : ""} 
+          ${this.walls[0] ? "walls-top " : ""} 
+          ${this.walls[1] ? "walls-right " : ""} 
+          ${this.walls[2] ? "walls-bottom " : ""} 
+          ${this.walls[3] ? "walls-left " : ""} 
           ">
         </div>
       </div>

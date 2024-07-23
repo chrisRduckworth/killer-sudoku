@@ -757,10 +757,10 @@ describe("drawCell", () => {
 		const walls =
 			cell.element.firstElementChild!.firstElementChild!.firstElementChild!;
 
-		expect(walls.classList.contains("north")).toBe(true);
-		expect(walls.classList.contains("east")).toBe(false);
-		expect(walls.classList.contains("south")).toBe(false);
-		expect(walls.classList.contains("west")).toBe(true);
+		expect(walls.classList.contains("walls-top")).toBe(true);
+		expect(walls.classList.contains("walls-right")).toBe(false);
+		expect(walls.classList.contains("walls-bottom")).toBe(false);
+		expect(walls.classList.contains("walls-left")).toBe(true);
 
 		const cell2 = new Cell(1);
 		cell2.element = document.createElement("td");
@@ -771,10 +771,10 @@ describe("drawCell", () => {
 		const walls2 =
 			cell2.element.firstElementChild!.firstElementChild!.firstElementChild!;
 
-		expect(walls2.classList.contains("north")).toBe(false);
-		expect(walls2.classList.contains("east")).toBe(true);
-		expect(walls2.classList.contains("south")).toBe(true);
-		expect(walls2.classList.contains("west")).toBe(true);
+		expect(walls2.classList.contains("walls-top")).toBe(false);
+		expect(walls2.classList.contains("walls-right")).toBe(true);
+		expect(walls2.classList.contains("walls-bottom")).toBe(true);
+		expect(walls2.classList.contains("walls-left")).toBe(true);
 	});
 	it("should create a list element for possible values", () => {
 		const cell = new Cell(0);
