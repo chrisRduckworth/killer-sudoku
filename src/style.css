@@ -17,6 +17,18 @@ td {
 	font-size: x-large;
 }
 
+.values td:focus {
+	background-color: aquamarine;
+}
+
+.notes td:focus {
+	background: linear-gradient(135deg, aquamarine 50%, white 50%);
+}
+
+td:focus .sum {
+	background-color: aquamarine;
+}
+
 td > div {
   position: relative;
   width: 60px;
