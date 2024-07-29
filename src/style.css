@@ -30,17 +30,17 @@ td:focus .sum {
 }
 
 td > div {
-  position: relative;
-  width: 60px;
-  height: 60px;
+	position: relative;
+	width: 60px;
+	height: 60px;
 }
 
 .thick-col {
-  border-right: 5px solid black;
+	border-right: 5px solid black;
 }
 
 .thick-row {
-  border-bottom: 5px solid black;
+	border-bottom: 5px solid black;
 }
 
 .walls-holder {
