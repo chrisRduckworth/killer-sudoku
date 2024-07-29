@@ -13,20 +13,19 @@ function setupTable() {
 		const row = document.createElement("tr");
 		for (let j = 0; j < 9; j++) {
 			const td = document.createElement("td");
+      td.tabIndex = 0
 			sudoku.cells[9 * i + j].element = td;
 			td.addEventListener("click", (e) => {
 				handleCellClick(e, sudoku, 9 * i + j);
 			});
-			// td.addEventListener("keydown", (e) => {
-			//   console.log("in listener")
-			//   handleKeypress(e)
-			// })
 			row.appendChild(td);
 		}
 		table.firstElementChild!.appendChild(row);
 	}
 
-	document.addEventListener("keydown", (e) => {
+  document.body.replaceChildren(table)
+
+	document.body.addEventListener("keydown", (e) => {
 		handleKeypress(e, sudoku);
 	});
 
@@ -117,4 +116,54 @@ describe("handleCellClick", () => {
 		expect(table).toHaveClass("notes");
 	});
 });
+
+describe("handleKeypress", () => {
+	describe("Enter key", () => {
+		it("should change the value of notes", async () => {
+			const user = userEvent.setup();
+			const sudoku = setupTable();
+      await user.tab()
+
+			await user.keyboard("{enter}");
+			expect(sudoku).toHaveProperty("notes", true);
+			await user.keyboard("{enter}");
+			expect(sudoku).toHaveProperty("notes", false);
+		});
+		it("should change the class of table to notes", async () => {
+			const user = userEvent.setup();
+			const sudoku = setupTable();
+			const table =
+				sudoku.cells[0].element.parentElement!.parentElement!.parentElement!;
+      await user.tab()
+
+			await user.keyboard("{enter}");
+
+			expect(table).toHaveClass("notes");
+			expect(table).not.toHaveClass("values");
+		});
+		it("should change the class of table back to values", async () => {
+			const user = userEvent.setup();
+			const sudoku = setupTable();
+			const table =
+				sudoku.cells[0].element.parentElement!.parentElement!.parentElement!;
+      await user.tab()
+      
+			await user.keyboard("{enter}");
+			await user.keyboard("{enter}");
+
+			expect(table).toHaveClass("values");
+			expect(table).not.toHaveClass("notes");
+		});
+    it("should not change notes or classes if the table is not focused on", async () => {
+      const user = userEvent.setup()
+      const sudoku = setupTable();
+			const table =
+				sudoku.cells[0].element.parentElement!.parentElement!.parentElement!;
+
+      await user.keyboard("{enter}")
+      expect(table).toHaveClass("values")
+      expect(table).not.toHaveClass("notes")
+      expect(sudoku).toHaveProperty("notes", false)
+    })
+	});
 });

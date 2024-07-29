@@ -16,6 +16,17 @@ function handleCellClick(_e: MouseEvent, sudoku: KillerSudoku, pos: number) {
 	return;
 }
 
-function handleKeydown() {}
+function handleKeypress(e: KeyboardEvent, sudoku: KillerSudoku) {
+  if (document.activeElement!.tagName !== "TD") {
+    return
+  }
+	const table =
+		sudoku.cells[0].element.parentElement!.parentElement!.parentElement!;
+	if (e.key === "Enter") {
+		sudoku.notes = !sudoku.notes;
+		table.classList.add(sudoku.notes ? "notes" : "values");
+		table.classList.remove(sudoku.notes ? "values" : "notes");
+	}
+}
 
-export { handleCellClick, handleKeydown };
+export { handleCellClick, handleKeypress };
