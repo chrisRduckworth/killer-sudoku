@@ -15,8 +15,8 @@ function setupTable() {
 			const td = document.createElement("td");
       td.tabIndex = 0
 			sudoku.cells[9 * i + j].element = td;
-			td.addEventListener("click", (e) => {
-				handleCellClick(e, sudoku, 9 * i + j);
+			td.addEventListener("mousedown", (e) => {
+				handleCellClick(e, sudoku);
 			});
 			row.appendChild(td);
 		}

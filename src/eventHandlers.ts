@@ -1,19 +1,23 @@
 import type KillerSudoku from "./KillerSudoku";
 
-function handleCellClick(_e: MouseEvent, sudoku: KillerSudoku, pos: number) {
-	const oldCell = sudoku.currCell;
-	const newCell = sudoku.cells[pos];
-
-	// for when we click on the same cell
-	if (oldCell && oldCell.position === newCell.position) {
+function handleCellClick(e: MouseEvent, sudoku: KillerSudoku) {
+	// this is a mousedown event so that it fires before focus
+	if (e.target === document.activeElement) {
+		// i.e. if we've clicked on a cell already focused on
+		// so we want to switch from notes to values or vice versa
 		sudoku.notes = !sudoku.notes;
-		const table = newCell.element.parentElement!.parentElement!.parentElement!;
+		const cell = sudoku.cells.find(
+			(c) => (e.target as HTMLTableCellElement) === c.element
+		);
+		if (!cell) {
+			throw new Error(
+				"Somehow this listener got put on a cell outside the sudoku"
+			);
+		}
+		const table = cell.element.parentElement!.parentElement!.parentElement!;
 		table.classList.add(sudoku.notes ? "notes" : "values");
 		table.classList.remove(sudoku.notes ? "values" : "notes");
 	}
-
-	sudoku.currCell = newCell;
-	return;
 }
 
 function handleKeypress(e: KeyboardEvent, sudoku: KillerSudoku) {
