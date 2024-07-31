@@ -30,46 +30,27 @@ function handleKeypress(e: KeyboardEvent, sudoku: KillerSudoku) {
 		return;
 	}
 
-	// on enter, swap from notes to values or vice versa
-	if (e.key === "Enter") {
-		sudoku.notes = !sudoku.notes;
-		table.classList.add(sudoku.notes ? "notes" : "values");
-		table.classList.remove(sudoku.notes ? "values" : "notes");
-		return;
-	}
-
-	// on arrow key, move focus as appropriate
-	if (e.key === "ArrowUp") {
-		if (cell.position > 8) {
-			// cell is not in top row
-			const newPosition = cell.position - 9;
-			sudoku.cells[newPosition].element.focus();
-		}
-		return;
-	}
-
-	if (e.key === "ArrowDown") {
-		if (cell.position < 72) {
-			const newPosition = cell.position + 9;
-			sudoku.cells[newPosition].element.focus();
-		}
-		return;
-	}
-
-	if (e.key === "ArrowRight") {
-		if (cell.position % 9 < 8) {
-			const newPosition = cell.position + 1;
-			sudoku.cells[newPosition].element.focus();
-		}
-		return;
-	}
-
-	if (e.key === "ArrowLeft") {
-		if (cell.position % 9 > 0) {
-			const newPosition = cell.position - 1;
-			sudoku.cells[newPosition].element.focus();
-		}
-		return;
+	switch (e.key) {
+		case "Enter":
+			// swap from notes to values or vice versa
+			sudoku.notes = !sudoku.notes;
+			table.classList.add(sudoku.notes ? "notes" : "values");
+			table.classList.remove(sudoku.notes ? "values" : "notes");
+			break;
+		case "ArrowUp":
+		case "ArrowDown":
+		case "ArrowLeft":
+		case "ArrowRight":
+			const [condition, pos] = {
+				ArrowUp: [cell.position > 8, -9],
+				ArrowDown: [cell.position < 72, 9],
+				ArrowRight: [cell.position % 9 < 8, 1],
+				ArrowLeft: [cell.position % 9 > 0, -1],
+			}[e.key] as [boolean, number];
+			if (condition) {
+				sudoku.cells[cell.position + pos].element.focus();
+			}
+			break;
 	}
 }
 
