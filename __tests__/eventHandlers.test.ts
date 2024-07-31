@@ -164,5 +164,132 @@ describe("handleKeypress", () => {
 			expect(sudoku).toHaveProperty("notes", false);
 		});
 	});
+	describe("arrow keys", () => {
+		it("up arrow should move focus to the cell above", async () => {
+			const user = userEvent.setup();
+			const sudoku = setupTable();
+			sudoku.cells[21].element.focus();
+
+			await user.keyboard("{ArrowUp}");
+
+			const focusedElement = sudoku.cells.find(
+				(c) => c.element === document.activeElement
+			);
+
+			expect(focusedElement).toHaveProperty("position", 12);
+		});
+		it("up arrow should not change focus if focused cell is on top row", async () => {
+			const user = userEvent.setup();
+			const sudoku = setupTable();
+			sudoku.cells[5].element.focus();
+
+			await user.keyboard("{ArrowUp}");
+
+			const focusedElement = sudoku.cells.find(
+				(c) => c.element === document.activeElement
+			);
+
+			expect(focusedElement).toHaveProperty("position", 5);
+		});
+		it("down arrow should move focus to the cell below", async () => {
+			const user = userEvent.setup();
+			const sudoku = setupTable();
+			sudoku.cells[34].element.focus();
+
+			await user.keyboard("{ArrowDown}");
+
+			const focusedElement = sudoku.cells.find(
+				(c) => c.element === document.activeElement
+			);
+
+			expect(focusedElement).toHaveProperty("position", 43);
+		});
+		it("down arrow should not change focus if focused cell is on bottom row", async () => {
+			const user = userEvent.setup();
+			const sudoku = setupTable();
+			sudoku.cells[77].element.focus();
+
+			await user.keyboard("{ArrowDown}");
+
+			const focusedElement = sudoku.cells.find(
+				(c) => c.element === document.activeElement
+			);
+
+			expect(focusedElement).toHaveProperty("position", 77);
+		});
+		it("right arrow should move focus to the cell right", async () => {
+			const user = userEvent.setup();
+			const sudoku = setupTable();
+			sudoku.cells[14].element.focus();
+
+			await user.keyboard("{ArrowRight}");
+
+			const focusedElement = sudoku.cells.find(
+				(c) => c.element === document.activeElement
+			);
+
+			expect(focusedElement).toHaveProperty("position", 15);
+		});
+		it("right arrow should not change focus if focused cell is on right column", async () => {
+			const user = userEvent.setup();
+			const sudoku = setupTable();
+			sudoku.cells[53].element.focus();
+
+			await user.keyboard("{ArrowRight}");
+
+			const focusedElement = sudoku.cells.find(
+				(c) => c.element === document.activeElement
+			);
+
+			expect(focusedElement).toHaveProperty("position", 53);
+		});
+		it("left arrow should move focus to the cell left", async () => {
+			const user = userEvent.setup();
+			const sudoku = setupTable();
+			sudoku.cells[60].element.focus();
+
+			await user.keyboard("{ArrowLeft}");
+
+			const focusedElement = sudoku.cells.find(
+				(c) => c.element === document.activeElement
+			);
+
+			expect(focusedElement).toHaveProperty("position", 59);
+		});
+		it("left arrow should not change focus if focused cell is on left column", async () => {
+			const user = userEvent.setup();
+			const sudoku = setupTable();
+			sudoku.cells[45].element.focus();
+
+			await user.keyboard("{ArrowLeft}");
+
+			const focusedElement = sudoku.cells.find(
+				(c) => c.element === document.activeElement
+			);
+
+			expect(focusedElement).toHaveProperty("position", 45);
+		});
+		it("should not change focus if the table is not focused on", async () => {
+			const user = userEvent.setup();
+			setupTable();
+			document.body.focus();
+
+			await user.keyboard("{ArrowLeft}");
+
+			expect(document.activeElement).toHaveProperty("tagName", "BODY");
+
+			await user.keyboard("{ArrowRight}");
+
+			expect(document.activeElement).toHaveProperty("tagName", "BODY");
+
+			await user.keyboard("{ArrowUp}");
+
+			expect(document.activeElement).toHaveProperty("tagName", "BODY");
+
+			await user.keyboard("{ArrowDown}");
+
+			expect(document.activeElement).toHaveProperty("tagName", "BODY");
+		});
+	});
 	});
 });
