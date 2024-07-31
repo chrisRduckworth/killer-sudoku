@@ -21,9 +21,9 @@ function handleCellClick(e: MouseEvent, sudoku: KillerSudoku) {
 }
 
 function handleKeypress(e: KeyboardEvent, sudoku: KillerSudoku) {
-  if (document.activeElement!.tagName !== "TD") {
-    return
-  }
+	if (document.activeElement!.tagName !== "TD") {
+		return;
+	}
 	const table =
 		sudoku.cells[0].element.parentElement!.parentElement!.parentElement!;
 	if (e.key === "Enter") {
