@@ -689,7 +689,21 @@ describe("render", () => {
 		expect(renderMock).toHaveBeenCalled();
 	});
 	it("should add an extra div element in the list of possible values if there is a sum element", () => {
+		const sudoku = new KillerSudoku(shapes)
+		const cell = sudoku.cells[0]
+		cell.element = document.createElement("td")
+		new Shape(5, [cell])
+		cell.draw()
 
+		cell.possibleValues.add(1)
+		cell.possibleValues.add(2)
+		cell.possibleValues.add(3)
+		cell.render()
+
+		const possibleValues = cell.element.getElementsByClassName("possible-values")[0]
+		expect(possibleValues.children).toHaveLength(4)
+		expect(possibleValues.firstElementChild).toHaveProperty("tagName", "DIV")
+		expect(possibleValues.firstElementChild).toHaveProperty("innerHTML", "")
 	})
 });
 
