@@ -1,6 +1,6 @@
 import "./style.css";
 import KillerSudoku from "./KillerSudoku";
-import { handleCellClick } from "./eventHandlers";
+import { handleCellClick, handleKeypress } from "./eventHandlers";
 
 const shapes: Array<[number, number[]]> = [
 	[20, [0, 1, 2, 9]],
@@ -40,8 +40,12 @@ const elements = [...document.getElementsByTagName("td")];
 elements.forEach((element, i) => {
 	const cell = sudoku.cells[i];
 	cell.element = element;
-	cell.element.addEventListener("click", (e) => {
-		handleCellClick(e, sudoku, i);
+	cell.element.addEventListener("mousedown", (e) => {
+		handleCellClick(e, sudoku);
 	});
 	cell.draw();
+});
+
+document.body.addEventListener("keydown", (e) => {
+	handleKeypress(e, sudoku);
 });
