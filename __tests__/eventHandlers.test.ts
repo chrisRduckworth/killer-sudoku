@@ -291,5 +291,5 @@ describe("handleKeypress", () => {
 			expect(document.activeElement).toHaveProperty("tagName", "BODY");
 		});
 	});
-	});
 });
+

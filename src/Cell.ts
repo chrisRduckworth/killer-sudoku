@@ -86,7 +86,7 @@ class Cell {
 			rowMatches.forEach((cell) => {
 				cell.isValid = false;
 				if (cell.position !== this.position) {
-					cell.render;
+					cell.render();
 				}
 			});
 		}
@@ -99,7 +99,7 @@ class Cell {
 			columnMatches.forEach((cell) => {
 				cell.isValid = false;
 				if (cell.position !== this.position) {
-					cell.render;
+					cell.render();
 				}
 			});
 		}
@@ -112,7 +112,7 @@ class Cell {
 			boxMatches.forEach((cell) => {
 				cell.isValid = false;
 				if (cell.position !== this.position) {
-					cell.render;
+					cell.render();
 				}
 			});
 		}
@@ -125,7 +125,7 @@ class Cell {
 			shapeMatches.forEach((cell) => {
 				cell.isValid = false;
 				if (cell.position !== this.position) {
-					cell.render;
+					cell.render();
 				}
 			});
 		}
@@ -168,23 +168,27 @@ class Cell {
 	render() {
 		// updates the html element with current cell info
 		// first clear out the current children
-		this.element.replaceChildren();
-		this.element.innerText = "";
+		const possValsList = this.element.getElementsByClassName("possible-values")[0]
+		const textElement = this.element.getElementsByClassName("value")[0]
+		textElement.replaceChildren()
+		possValsList.replaceChildren()
+
 		if (this.value > 0) {
 			// then the value has been set and that's what needs to be shown
-			this.element.innerText = `${this.value}`;
+			textElement.replaceChildren(document.createTextNode(`${this.value}`))
 		} else if (this.possibleValues.size > 0) {
+			if (this.element.getElementsByClassName("sum").length > 0) {
+				possValsList.appendChild(document.createElement("div"))
+			}
 			// we need to display the list of possible values
 			const possValsSorted = [...this.possibleValues.values()].sort((a, b) =>
 				a < b ? -1 : 1
 			);
-			const possValsList = document.createElement("ol");
 			for (const val of possValsSorted) {
 				const item = document.createElement("li");
-				item.innerText = `${val}`;
+				item.replaceChildren(document.createTextNode(`${val}`))
 				possValsList.appendChild(item);
 			}
-			this.element.appendChild(possValsList);
 		}
 		// if there are neither value or possVals then it is left blank
 
@@ -232,6 +236,7 @@ class Cell {
 		}
 
 		this.element.innerHTML = `<div>
+			<div class="value"></div>
       <div class="walls-holder">
         <div class="walls
           ${this.walls[0] ? "walls-top " : ""} 
