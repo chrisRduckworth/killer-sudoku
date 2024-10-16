@@ -70,8 +70,7 @@ describe("handleCellClick", () => {
 		const user = userEvent.setup();
 		const sudoku = setupTable();
 		const table =
-			sudoku.cells[0].element.parentElement!.parentElement!
-				.parentElement!;
+			sudoku.cells[0].element.parentElement!.parentElement!.parentElement!;
 
 		expect(table).toHaveClass("values");
 		expect(table).not.toHaveClass("notes");
@@ -86,8 +85,7 @@ describe("handleCellClick", () => {
 		const user = userEvent.setup();
 		const sudoku = setupTable();
 		const table =
-			sudoku.cells[0].element.parentElement!.parentElement!
-				.parentElement!;
+			sudoku.cells[0].element.parentElement!.parentElement!.parentElement!;
 
 		await user.click(sudoku.cells[5].element);
 		await user.click(sudoku.cells[5].element);
@@ -100,8 +98,7 @@ describe("handleCellClick", () => {
 		const user = userEvent.setup();
 		const sudoku = setupTable();
 		const table =
-			sudoku.cells[0].element.parentElement!.parentElement!
-				.parentElement!;
+			sudoku.cells[0].element.parentElement!.parentElement!.parentElement!;
 
 		await user.click(sudoku.cells[1].element);
 		await user.click(sudoku.cells[5].element);
@@ -128,8 +125,7 @@ describe("handleKeypress", () => {
 			const user = userEvent.setup();
 			const sudoku = setupTable();
 			const table =
-				sudoku.cells[0].element.parentElement!.parentElement!
-					.parentElement!;
+				sudoku.cells[0].element.parentElement!.parentElement!.parentElement!;
 			await user.tab();
 
 			await user.keyboard("{enter}");
@@ -141,8 +137,7 @@ describe("handleKeypress", () => {
 			const user = userEvent.setup();
 			const sudoku = setupTable();
 			const table =
-				sudoku.cells[0].element.parentElement!.parentElement!
-					.parentElement!;
+				sudoku.cells[0].element.parentElement!.parentElement!.parentElement!;
 			await user.tab();
 
 			await user.keyboard("{enter}");
@@ -155,8 +150,7 @@ describe("handleKeypress", () => {
 			const user = userEvent.setup();
 			const sudoku = setupTable();
 			const table =
-				sudoku.cells[0].element.parentElement!.parentElement!
-					.parentElement!;
+				sudoku.cells[0].element.parentElement!.parentElement!.parentElement!;
 
 			await user.keyboard("{enter}");
 			expect(table).toHaveClass("values");
@@ -291,5 +285,39 @@ describe("handleKeypress", () => {
 			expect(document.activeElement).toHaveProperty("tagName", "BODY");
 		});
 	});
-});
+	describe("number keys", () => {
+		it("should not change anything if the table is not focused on", async () => {
+			const user = userEvent.setup();
+			const sudoku = setupTable();
+			document.body.focus();
 
+			for (let i = 1; i < 10; i++) {
+				await user.keyboard(`${i}`);
+				expect(sudoku.cells.every((c) => c.value === 0)).toBe(true);
+			}
+		}),
+			it("should set the value if a number key is pressed", async () => {
+				const user = userEvent.setup();
+				const sudoku = setupTable();
+				const cell = sudoku.cells[0];
+				cell.element.focus();
+
+				for (let i = 1; i < 10; i++) {
+					await user.keyboard(`${i}`);
+					expect(cell.value).toBe(i);
+				}
+			});
+		it("should unset the value if they key pressed is equal to the value", async () => {
+			const user = userEvent.setup();
+			const sudoku = setupTable();
+			const cell = sudoku.cells[54];
+			cell.element.focus();
+
+			for (let i = 1; i < 10; i++) {
+				await user.keyboard(`${i}`);
+				await user.keyboard(`${i}`);
+				expect(cell.value).toBe(0);
+			}
+		});
+	});
+});
