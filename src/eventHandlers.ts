@@ -2,12 +2,31 @@ import type KillerSudoku from "./KillerSudoku";
 
 function handleCellClick(e: MouseEvent, sudoku: KillerSudoku) {
 	// this is a mousedown event so that it fires before focus
-	if (e.target === document.activeElement) {
+
+	// e.target can be the table data element or any child, so we must find
+	// check if it is in that list of elements
+	let sameCellTargets: Element[] = [];
+	if (document.activeElement && document.activeElement.tagName === "TD") {
+		sameCellTargets = [
+			...document.activeElement.getElementsByTagName("*"),
+			document.activeElement,
+		];
+	}
+	const match = sameCellTargets.find((el) => el === e.target);
+
+	if (match) {
 		// i.e. if we've clicked on a cell already focused on
-		// so we want to switch from notes to values or vice versa
+
+		// find the table data element holding e.target
+		let td: Element = match;
+		while (td.tagName !== "TD") {
+			td = td.parentElement as Element;
+		}
+
+		// we want to switch from notes to values or vice versa
 		sudoku.notes = !sudoku.notes;
 		const cell = sudoku.cells.find(
-			(c) => (e.target as HTMLTableCellElement) === c.element
+			(c) => (td as HTMLTableCellElement) === c.element
 		);
 		if (!cell) {
 			throw new Error(
