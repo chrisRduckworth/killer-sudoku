@@ -13,6 +13,12 @@ function setupTable() {
 		const row = document.createElement("tr");
 		for (let j = 0; j < 9; j++) {
 			const td = document.createElement("td");
+			const value = document.createElement("div");
+			value.classList.add("value");
+			const poss = document.createElement("div");
+			poss.classList.add("possible-values");
+			td.appendChild(value);
+			td.appendChild(poss);
 			td.tabIndex = 0;
 			sudoku.cells[9 * i + j].element = td;
 			td.addEventListener("mousedown", (e) => {
@@ -320,4 +326,5 @@ describe("handleKeypress", () => {
 			}
 		});
 	});
+	//need poss vals tests
 });
