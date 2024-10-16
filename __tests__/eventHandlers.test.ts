@@ -291,7 +291,7 @@ describe("handleKeypress", () => {
 			expect(document.activeElement).toHaveProperty("tagName", "BODY");
 		});
 	});
-	describe("number keys", () => {
+	describe.only("number keys", () => {
 		it("should not change anything if the table is not focused on", async () => {
 			const user = userEvent.setup();
 			const sudoku = setupTable();
@@ -325,6 +325,30 @@ describe("handleKeypress", () => {
 				expect(cell.value).toBe(0);
 			}
 		});
+		it("should add the value to possible values if notes is true", async () => {
+			const user = userEvent.setup();
+			const sudoku = setupTable();
+      sudoku.notes = true
+			const cell = sudoku.cells[33];
+			cell.element.focus();
+
+			for (let i = 1; i < 10; i++) {
+				await user.keyboard(`${i}`);
+				expect(cell.possibleValues.has(i)).toBe(true);
+			}
+		});
+		it("should remove the value from possible values if notes is true", async () => {
+			const user = userEvent.setup();
+			const sudoku = setupTable();
+      sudoku.notes = true
+			const cell = sudoku.cells[12];
+			cell.element.focus();
+
+			for (let i = 1; i < 10; i++) {
+				await user.keyboard(`${i}`);
+				await user.keyboard(`${i}`);
+				expect(cell.possibleValues.has(i)).toBe(false);
+			}
+		});
 	});
-	//need poss vals tests
 });
