@@ -126,3 +126,35 @@ td > div {
 	right: 0px;
 	border-left: 2px dashed black;
 }
+
+.possible-values {
+	list-style: none;
+	font-size: small;
+	display: grid;
+	grid-template-columns: 10px 10px 10px 10px;
+	grid-template-rows: 15px 15px 15px;
+	padding: 2px;
+	margin: 5px;
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	width: 45px;
+	height: 45px;
+	justify-content: center;
+}
+
+.possible-values li {
+	z-index: 2;
+	text-align: center;
+}
+
+.value {
+	height: inherit;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.invalid .value {
+	color: red;
+}
