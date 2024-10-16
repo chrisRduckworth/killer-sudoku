@@ -51,6 +51,23 @@ function handleKeypress(e: KeyboardEvent, sudoku: KillerSudoku) {
 				sudoku.cells[cell.position + pos].element.focus();
 			}
 			break;
+    case "1":
+    case "2":
+    case "3":
+    case "4":
+    case "5":
+    case "6":
+    case "7":
+    case "8": 
+    case "9":
+      const value = parseInt(e.key)
+      if (value === cell.value) {
+        cell.setValue(0)
+      } else {
+        cell.setValue(value);
+      }
+      break;
+
 	}
 }
 
