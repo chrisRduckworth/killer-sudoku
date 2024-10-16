@@ -291,7 +291,7 @@ describe("handleKeypress", () => {
 			expect(document.activeElement).toHaveProperty("tagName", "BODY");
 		});
 	});
-	describe.only("number keys", () => {
+	describe("number keys", () => {
 		it("should not change anything if the table is not focused on", async () => {
 			const user = userEvent.setup();
 			const sudoku = setupTable();
