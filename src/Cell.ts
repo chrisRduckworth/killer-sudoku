@@ -149,15 +149,31 @@ class Cell {
 
 		// remove n from possibleValues of cells in the same row/column/box/shape
 		const row = this.sudoku.getRow(this.row);
-		row.forEach((cell) => cell.possibleValues.delete(n));
+		row.forEach((cell) => {
+			if (cell.possibleValues.has(n)) {
+				cell.setPossVal(n);
+			}
+		});
 
 		const column = this.sudoku.getColumn(this.column);
-		column.forEach((cell) => cell.possibleValues.delete(n));
+		column.forEach((cell) => {
+			if (cell.possibleValues.has(n)) {
+				cell.setPossVal(n);
+			}
+		});
 
 		const box = this.sudoku.getBox(this.box);
-		box.forEach((cell) => cell.possibleValues.delete(n));
+		box.forEach((cell) => {
+			if (cell.possibleValues.has(n)) {
+				cell.setPossVal(n);
+			}
+		});
 
-		this.shape.cells.forEach((cell) => cell.possibleValues.delete(n));
+		this.shape.cells.forEach((cell) => {
+			if (cell.possibleValues.has(n)) {
+				cell.setPossVal(n);
+			}
+		});
 
 		this.value = 0;
 		this.setIsValid();
