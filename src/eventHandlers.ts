@@ -81,14 +81,17 @@ function handleKeypress(e: KeyboardEvent, sudoku: KillerSudoku) {
 		case "8":
 		case "9":
 			// add/remove value
-			const value = parseInt(e.key);
+			const key = parseInt(e.key);
 			if (sudoku.notes) {
-				cell.setPossVal(value);
+				// only change the possible values if the cell has no value
+				if (cell.value === 0) {
+					cell.setPossVal(key);
+				}
 			} else {
-				if (value === cell.value) {
+				if (key === cell.value) {
 					cell.setValue(0);
 				} else {
-					cell.setValue(value);
+					cell.setValue(key);
 				}
 			}
 			break;

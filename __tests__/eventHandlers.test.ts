@@ -350,6 +350,21 @@ describe("handleKeypress", () => {
 				expect(cell.possibleValues.has(i)).toBe(false);
 			}
 		});
+		it("should not change possible values when in notes and there is a value", async () => {
+			const user = userEvent.setup();
+			const sudoku = setupTable();
+			const cell = sudoku.cells[12];
+			cell.setValue(4);
+			sudoku.notes = true;
+			cell.element.focus();
+
+			await user.keyboard("5");
+			expect(cell.possibleValues.has(5)).toBe(false);
+
+			cell.setPossVal(5);
+			await user.keyboard("5");
+			expect(cell.possibleValues.has(5)).toBe(true);
+		});
 	});
 	describe("backspace/delete", () => {
 		it("should do nothing if a cell is not focused", async () => {
