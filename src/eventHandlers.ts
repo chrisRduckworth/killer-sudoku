@@ -60,6 +60,7 @@ function handleKeypress(e: KeyboardEvent, sudoku: KillerSudoku) {
 		case "ArrowDown":
 		case "ArrowLeft":
 		case "ArrowRight":
+			// move focus around
 			const [condition, pos] = {
 				ArrowUp: [cell.position > 8, -9],
 				ArrowDown: [cell.position < 72, 9],
@@ -79,6 +80,7 @@ function handleKeypress(e: KeyboardEvent, sudoku: KillerSudoku) {
 		case "7":
 		case "8":
 		case "9":
+			// add/remove value
 			const value = parseInt(e.key);
 			if (sudoku.notes) {
 				cell.setPossVal(value);
@@ -88,6 +90,13 @@ function handleKeypress(e: KeyboardEvent, sudoku: KillerSudoku) {
 				} else {
 					cell.setValue(value);
 				}
+			}
+			break;
+		case "Backspace":
+		case "Delete":
+			// remove value
+			if (!sudoku.notes) {
+				cell.setValue(0);
 			}
 			break;
 	}

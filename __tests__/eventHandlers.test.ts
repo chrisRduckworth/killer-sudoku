@@ -328,7 +328,7 @@ describe("handleKeypress", () => {
 		it("should add the value to possible values if notes is true", async () => {
 			const user = userEvent.setup();
 			const sudoku = setupTable();
-      sudoku.notes = true
+			sudoku.notes = true;
 			const cell = sudoku.cells[33];
 			cell.element.focus();
 
@@ -340,7 +340,7 @@ describe("handleKeypress", () => {
 		it("should remove the value from possible values if notes is true", async () => {
 			const user = userEvent.setup();
 			const sudoku = setupTable();
-      sudoku.notes = true
+			sudoku.notes = true;
 			const cell = sudoku.cells[12];
 			cell.element.focus();
 
@@ -349,6 +349,60 @@ describe("handleKeypress", () => {
 				await user.keyboard(`${i}`);
 				expect(cell.possibleValues.has(i)).toBe(false);
 			}
+		});
+	});
+	describe("backspace/delete", () => {
+		it("should do nothing if a cell is not focused", async () => {
+			const user = userEvent.setup();
+			const sudoku = setupTable();
+			document.body.focus();
+			sudoku.cells[45].setValue(5);
+
+			await user.keyboard("{Backspace}");
+			expect(sudoku.cells[45].value).toBe(5);
+
+			await user.keyboard("{Delete}");
+			expect(sudoku.cells[45].value).toBe(5);
+		});
+		it("should set the value to 0 if there is a value in the cell", async () => {
+			const user = userEvent.setup();
+			const sudoku = setupTable();
+			const cell = sudoku.cells[5];
+			cell.setValue(6);
+			cell.element.focus();
+
+			await user.keyboard("{Backspace}");
+			expect(cell).toHaveProperty("value", 0);
+
+			cell.setValue(3);
+			await user.keyboard("{Delete}");
+			expect(cell).toHaveProperty("value", 0);
+		});
+		it("should do nothing if in notes mode", async () => {
+			const user = userEvent.setup();
+			const sudoku = setupTable();
+			const cell = sudoku.cells[16];
+			cell.setValue(3);
+			cell.element.focus();
+			sudoku.notes = true;
+
+			await user.keyboard("{Backspace}");
+			expect(cell).toHaveProperty("value", 3);
+
+			await user.keyboard("{Delete}");
+			expect(cell).toHaveProperty("value", 3);
+		});
+		it("should not change the value if it is already 0", async () => {
+			const user = userEvent.setup();
+			const sudoku = setupTable();
+			const cell = sudoku.cells[26];
+			cell.element.focus();
+
+			await user.keyboard("{Backspace}");
+			expect(cell).toHaveProperty("value", 0);
+
+			await user.keyboard("{Delete}");
+			expect(cell).toHaveProperty("value", 0);
 		});
 	});
 });
