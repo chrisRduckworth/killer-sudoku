@@ -416,7 +416,7 @@ describe("setValue", () => {
 	it("should set the value property", () => {
 		const sudoku = new KillerSudoku(shapes);
 		const cell = sudoku.cells[0];
-		cell.element = createTd()
+		cell.element = createTd();
 
 		for (let i = 0; i < 10; i++) {
 			cell.setValue(i);
@@ -426,7 +426,7 @@ describe("setValue", () => {
 	it("should throw if given wrong type", () => {
 		const sudoku = new KillerSudoku(shapes);
 		const cell = sudoku.cells[0];
-		cell.element = createTd()
+		cell.element = createTd();
 
 		expect(() => cell.setValue("bananas" as any)).toThrow(
 			"value must be an integer between 0 and 9"
@@ -435,7 +435,7 @@ describe("setValue", () => {
 	it("should throw if given non-integer type", () => {
 		const sudoku = new KillerSudoku(shapes);
 		const cell = sudoku.cells[0];
-		cell.element = createTd()
+		cell.element = createTd();
 
 		expect(() => cell.setValue(4.5)).toThrow(
 			"value must be an integer between 0 and 9"
@@ -444,7 +444,7 @@ describe("setValue", () => {
 	it("should throw if given integer outside range type", () => {
 		const sudoku = new KillerSudoku(shapes);
 		const cell = sudoku.cells[0];
-		cell.element = createTd()
+		cell.element = createTd();
 
 		expect(() => cell.setValue(-3)).toThrow(
 			"value must be an integer between 0 and 9"
@@ -458,9 +458,9 @@ describe("setValue", () => {
 		const cell1 = sudoku.cells[0];
 		const cell2 = sudoku.cells[3];
 		const cell3 = sudoku.cells[7];
-		cell1.element = createTd()
-		cell2.element = createTd()
-		cell3.element = createTd()
+		cell1.element = createTd();
+		cell2.element = createTd();
+		cell3.element = createTd();
 
 		cell2.possibleValues.add(1);
 		cell3.possibleValues.add(1);
@@ -475,9 +475,9 @@ describe("setValue", () => {
 		const cell1 = sudoku.cells[5];
 		const cell2 = sudoku.cells[32];
 		const cell3 = sudoku.cells[77];
-		cell1.element = createTd()
-		cell2.element = createTd()
-		cell3.element = createTd()
+		cell1.element = createTd();
+		cell2.element = createTd();
+		cell3.element = createTd();
 
 		cell2.possibleValues.add(5);
 		cell3.possibleValues.add(5);
@@ -492,9 +492,9 @@ describe("setValue", () => {
 		const cell1 = sudoku.cells[30];
 		const cell2 = sudoku.cells[40];
 		const cell3 = sudoku.cells[50];
-		cell1.element = createTd()
-		cell2.element = createTd()
-		cell3.element = createTd()
+		cell1.element = createTd();
+		cell2.element = createTd();
+		cell3.element = createTd();
 
 		cell2.possibleValues.add(7);
 		cell3.possibleValues.add(7);
@@ -508,8 +508,8 @@ describe("setValue", () => {
 		const sudoku = new KillerSudoku(shapes);
 		const cell1 = sudoku.cells[39];
 		const cell2 = sudoku.cells[56];
-		cell1.element = createTd()
-		cell2.element = createTd()
+		cell1.element = createTd();
+		cell2.element = createTd();
 
 		cell2.possibleValues.add(8);
 
@@ -521,8 +521,8 @@ describe("setValue", () => {
 		const sudoku = new KillerSudoku(shapes);
 		const cell1 = sudoku.cells[0];
 		const cell2 = sudoku.cells[4];
-		cell1.element = createTd()
-		cell2.element = createTd()
+		cell1.element = createTd();
+		cell2.element = createTd();
 		cell2.setValue(5);
 		const setIsValidMock = jest.spyOn(Cell.prototype, "setIsValid");
 
@@ -536,8 +536,8 @@ describe("setValue", () => {
 		const sudoku = new KillerSudoku(shapes);
 		const cell1 = sudoku.cells[0];
 		const cell2 = sudoku.cells[4];
-		cell1.element = createTd()
-		cell2.element = createTd()
+		cell1.element = createTd();
+		cell2.element = createTd();
 		cell1.setValue(5);
 		cell2.setValue(5);
 
@@ -546,58 +546,70 @@ describe("setValue", () => {
 		expect(cell1).toHaveProperty("isValid", true);
 		expect(cell2).toHaveProperty("isValid", true);
 	});
+	it("should not remove the value from possible values of its own cell when the value is set", () => {
+		const sudoku = new KillerSudoku(shapes);
+		const cell = sudoku.cells[25];
+		cell.element = createTd();
+		cell.setPossVal(1);
+
+		cell.setValue(1);
+
+		expect(cell.possibleValues.has(1)).toBe(true);
+	});
 });
 
 describe("render", () => {
-	
 	it("should set the node empty if there are no possible values or value", () => {
 		const sudoku = new KillerSudoku(shapes);
 		const cell = sudoku.cells[0];
-		cell.element = createTd()
+		cell.element = createTd();
 		cell.render();
 
-		const value = cell.element.getElementsByClassName("value")[0]
-		const possibleValues = cell.element.getElementsByClassName("possible-values")[0]
-		expect(value).toHaveProperty("innerHTML", "")
-		expect(possibleValues.hasChildNodes()).toBe(false)
+		const value = cell.element.getElementsByClassName("value")[0];
+		const possibleValues =
+			cell.element.getElementsByClassName("possible-values")[0];
+		expect(value).toHaveProperty("innerHTML", "");
+		expect(possibleValues.hasChildNodes()).toBe(false);
 	});
 	it("should set the element to the value of the cell if one is present", () => {
 		const sudoku = new KillerSudoku(shapes);
 		const cell = sudoku.cells[0];
-		cell.element = createTd()
+		cell.element = createTd();
 		cell.render();
 
 		cell.value = 5;
 		cell.render();
 
-		const value = cell.element.getElementsByClassName("value")[0]
-		const possibleValues = cell.element.getElementsByClassName("possible-values")[0]
-		expect(value).toHaveProperty("innerHTML", "5")
-		expect(possibleValues.hasChildNodes()).toBe(false)
+		const value = cell.element.getElementsByClassName("value")[0];
+		const possibleValues =
+			cell.element.getElementsByClassName("possible-values")[0];
+		expect(value).toHaveProperty("innerHTML", "5");
+		expect(possibleValues.hasChildNodes()).toBe(false);
 	});
 	it("should set the element to a list of possible values if no value is present", () => {
 		const sudoku = new KillerSudoku(shapes);
 		const cell = sudoku.cells[0];
-		cell.element = createTd()
+		cell.element = createTd();
 		cell.possibleValues.add(1);
 		cell.possibleValues.add(6);
 		cell.possibleValues.add(9);
 
 		cell.render();
 
-		const value = cell.element.getElementsByClassName("value")[0]
-		const possibleValues = cell.element.getElementsByClassName("possible-values")[0]
-		expect(value).toHaveProperty("innerHTML", "")
+		const value = cell.element.getElementsByClassName("value")[0];
+		const possibleValues =
+			cell.element.getElementsByClassName("possible-values")[0];
+		expect(value).toHaveProperty("innerHTML", "");
 
-		expect(possibleValues.children).toHaveLength(3)
-		expect(possibleValues.children[0]).toHaveProperty("innerHTML", "1")
-		expect(possibleValues.children[1]).toHaveProperty("innerHTML", "6")
-		expect(possibleValues.children[2]).toHaveProperty("innerHTML", "9")
+		expect(possibleValues.children).toHaveLength(3);
+		expect(possibleValues.children[0]).toHaveProperty("innerHTML", "1");
+		expect(possibleValues.children[1]).toHaveProperty("innerHTML", "6");
+		expect(possibleValues.children[2]).toHaveProperty("innerHTML", "9");
 	});
 	it("should set the element to the value if one is present even if there are possible values", () => {
 		const sudoku = new KillerSudoku(shapes);
 		const cell = sudoku.cells[0];
-		cell.element = createTd()
+		cell.element = createTd();
 		cell.possibleValues.add(1);
 		cell.possibleValues.add(6);
 		cell.possibleValues.add(9);
@@ -606,30 +618,32 @@ describe("render", () => {
 		cell.value = 5;
 		cell.render();
 
-		const value = cell.element.getElementsByClassName("value")[0]
-		const possibleValues = cell.element.getElementsByClassName("possible-values")[0]
-		expect(value).toHaveProperty("innerHTML", "5")
-		expect(possibleValues.hasChildNodes()).toBe(false)
+		const value = cell.element.getElementsByClassName("value")[0];
+		const possibleValues =
+			cell.element.getElementsByClassName("possible-values")[0];
+		expect(value).toHaveProperty("innerHTML", "5");
+		expect(possibleValues.hasChildNodes()).toBe(false);
 	});
 	it("should remove the value if it is set to 0", () => {
 		const sudoku = new KillerSudoku(shapes);
 		const cell = sudoku.cells[0];
-		cell.element = createTd()
+		cell.element = createTd();
 		cell.value = 5;
 		cell.render();
 
 		cell.value = 0;
 		cell.render();
 
-		const value = cell.element.getElementsByClassName("value")[0]
-		const possibleValues = cell.element.getElementsByClassName("possible-values")[0]
-		expect(value).toHaveProperty("innerHTML", "")
-		expect(possibleValues.hasChildNodes()).toBe(false)
+		const value = cell.element.getElementsByClassName("value")[0];
+		const possibleValues =
+			cell.element.getElementsByClassName("possible-values")[0];
+		expect(value).toHaveProperty("innerHTML", "");
+		expect(possibleValues.hasChildNodes()).toBe(false);
 	});
 	it("should return to possible values if value is set to 0", () => {
 		const sudoku = new KillerSudoku(shapes);
 		const cell = sudoku.cells[0];
-		cell.element = createTd()
+		cell.element = createTd();
 		cell.possibleValues.add(1);
 		cell.possibleValues.add(7);
 		cell.possibleValues.add(4);
@@ -640,20 +654,21 @@ describe("render", () => {
 		cell.value = 0;
 		cell.render();
 
-		const value = cell.element.getElementsByClassName("value")[0]
-		const possibleValues = cell.element.getElementsByClassName("possible-values")[0]
-		expect(value).toHaveProperty("innerHTML", "")
-		
-		expect(possibleValues.children).toHaveLength(4)
-		expect(possibleValues.children[0]).toHaveProperty("innerHTML", "1")
-		expect(possibleValues.children[1]).toHaveProperty("innerHTML", "2")
-		expect(possibleValues.children[2]).toHaveProperty("innerHTML", "4")
-		expect(possibleValues.children[3]).toHaveProperty("innerHTML", "7")
+		const value = cell.element.getElementsByClassName("value")[0];
+		const possibleValues =
+			cell.element.getElementsByClassName("possible-values")[0];
+		expect(value).toHaveProperty("innerHTML", "");
+
+		expect(possibleValues.children).toHaveLength(4);
+		expect(possibleValues.children[0]).toHaveProperty("innerHTML", "1");
+		expect(possibleValues.children[1]).toHaveProperty("innerHTML", "2");
+		expect(possibleValues.children[2]).toHaveProperty("innerHTML", "4");
+		expect(possibleValues.children[3]).toHaveProperty("innerHTML", "7");
 	});
 	it("should add class invalid if isValid is set to false", () => {
 		const sudoku = new KillerSudoku(shapes);
 		const cell = sudoku.cells[0];
-		cell.element = createTd()
+		cell.element = createTd();
 		cell.value = 4;
 		cell.isValid = false;
 
@@ -664,7 +679,7 @@ describe("render", () => {
 	it("should remove class invalid if it is set to true", () => {
 		const sudoku = new KillerSudoku(shapes);
 		const cell = sudoku.cells[0];
-		cell.element = createTd()
+		cell.element = createTd();
 		cell.value = 4;
 		cell.isValid = false;
 		cell.render();
@@ -678,9 +693,9 @@ describe("render", () => {
 		const sudoku = new KillerSudoku(shapes);
 		const cell1 = sudoku.cells[0];
 		const cell2 = sudoku.cells[4];
-		cell1.element = createTd()
+		cell1.element = createTd();
 		cell1.value = 4;
-		cell2.element = createTd()
+		cell2.element = createTd();
 		cell2.value = 4;
 		const renderMock = jest.spyOn(Cell.prototype, "render");
 
@@ -689,22 +704,23 @@ describe("render", () => {
 		expect(renderMock).toHaveBeenCalled();
 	});
 	it("should add an extra div element in the list of possible values if there is a sum element", () => {
-		const sudoku = new KillerSudoku(shapes)
-		const cell = sudoku.cells[0]
-		cell.element = document.createElement("td")
-		new Shape(5, [cell])
-		cell.draw()
+		const sudoku = new KillerSudoku(shapes);
+		const cell = sudoku.cells[0];
+		cell.element = document.createElement("td");
+		new Shape(5, [cell]);
+		cell.draw();
 
-		cell.possibleValues.add(1)
-		cell.possibleValues.add(2)
-		cell.possibleValues.add(3)
-		cell.render()
+		cell.possibleValues.add(1);
+		cell.possibleValues.add(2);
+		cell.possibleValues.add(3);
+		cell.render();
 
-		const possibleValues = cell.element.getElementsByClassName("possible-values")[0]
-		expect(possibleValues.children).toHaveLength(4)
-		expect(possibleValues.firstElementChild).toHaveProperty("tagName", "DIV")
-		expect(possibleValues.firstElementChild).toHaveProperty("innerHTML", "")
-	})
+		const possibleValues =
+			cell.element.getElementsByClassName("possible-values")[0];
+		expect(possibleValues.children).toHaveLength(4);
+		expect(possibleValues.firstElementChild).toHaveProperty("tagName", "DIV");
+		expect(possibleValues.firstElementChild).toHaveProperty("innerHTML", "");
+	});
 });
 
 describe("setPossVal", () => {

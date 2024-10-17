@@ -145,6 +145,8 @@ class Cell {
 			throw TypeError("value must be an integer between 0 and 9");
 		}
 
+		const inPoss = this.possibleValues.has(n);
+
 		// remove n from possibleValues of cells in the same row/column/box/shape
 		const row = this.sudoku.getRow(this.row);
 		row.forEach((cell) => cell.possibleValues.delete(n));
@@ -162,6 +164,11 @@ class Cell {
 		if (n !== 0) {
 			this.value = n;
 			this.setIsValid();
+		}
+
+		if (inPoss) {
+			// re-adds to possible values for if it got deleted
+			this.setPossVal(n);
 		}
 	}
 
