@@ -158,3 +158,9 @@ td > div {
 .invalid .value {
 	color: red;
 }
+
+.number-button {
+	height: 3em;
+	width: 3em;
+	font-size: large;
+}

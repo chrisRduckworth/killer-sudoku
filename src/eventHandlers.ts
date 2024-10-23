@@ -105,4 +105,7 @@ function handleKeypress(e: KeyboardEvent, sudoku: KillerSudoku) {
 	}
 }
 
-export { handleCellClick, handleKeypress };
+function handleNumberButtonPress(n: number, sudoku: KillerSudoku){
+}
+
+export { handleCellClick, handleKeypress, handleNumberButtonPress };

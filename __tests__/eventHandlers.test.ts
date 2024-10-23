@@ -375,3 +375,6 @@ describe("handleKeypress", () => {
 		});
 	});
 });
+
+describe("handleNumberButtonPress", () => {
+});
