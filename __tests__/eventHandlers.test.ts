@@ -1,11 +1,18 @@
-import { handleCellClick, handleKeypress } from "../src/eventHandlers";
+import {
+	handleCellClick,
+	handleKeypress,
+	handleNumberButtonPress,
+} from "../src/eventHandlers";
 import KillerSudoku from "../src/KillerSudoku";
 import shapes from "./shapes";
 import "@testing-library/jest-dom";
-import userEvent from "@testing-library/user-event";
+import userEvent, { UserEvent } from "@testing-library/user-event";
 
-function setupTable() {
-	const sudoku = new KillerSudoku(shapes);
+let sudoku = new KillerSudoku(shapes);
+let user: UserEvent;
+
+beforeEach(() => {
+	// add table and cells
 	const table = document.createElement("table");
 	table.classList.add("values");
 	table.appendChild(document.createElement("tbody"));
@@ -35,23 +42,31 @@ function setupTable() {
 		handleKeypress(e, sudoku);
 	});
 
-	return sudoku;
-}
+	// add buttons
+	for (let i = 0; i < 9; i++) {
+		const button = document.createElement("button");
+		button.classList.add("number-button");
+		button.addEventListener("click", (_e) => {
+			handleNumberButtonPress(i + 1, sudoku);
+		});
+	}
+
+	user = userEvent.setup();
+});
+
+afterEach(() => {
+	sudoku = new KillerSudoku(shapes);
+	document.getElementsByTagName("html")[0].innerHTML = "";
+});
 
 describe("handleCellClick", () => {
 	it("clicking on the same cell should set notes to true", async () => {
-		const user = userEvent.setup();
-		const sudoku = setupTable();
-
 		await user.click(sudoku.cells[5].element);
 		await user.click(sudoku.cells[5].element);
 
 		expect(sudoku).toHaveProperty("notes", true);
 	});
 	it("clicking on the same cell should set notes to false if already true", async () => {
-		const user = userEvent.setup();
-		const sudoku = setupTable();
-
 		await user.click(sudoku.cells[5].element);
 		await user.click(sudoku.cells[5].element);
 		await user.click(sudoku.cells[5].element);
@@ -59,9 +74,6 @@ describe("handleCellClick", () => {
 		expect(sudoku).toHaveProperty("notes", false);
 	});
 	it("clicking on another cell should not change notes value", async () => {
-		const user = userEvent.setup();
-		const sudoku = setupTable();
-
 		await user.click(sudoku.cells[5].element);
 		await user.click(sudoku.cells[5].element);
 
@@ -73,10 +85,7 @@ describe("handleCellClick", () => {
 		expect(sudoku).toHaveProperty("notes", false);
 	});
 	it("clicking on the same cell should add the notes class to the table", async () => {
-		const user = userEvent.setup();
-		const sudoku = setupTable();
-		const table =
-			sudoku.cells[0].element.parentElement!.parentElement!.parentElement!;
+		const table = document.getElementsByTagName("table")[0];
 
 		expect(table).toHaveClass("values");
 		expect(table).not.toHaveClass("notes");
@@ -88,10 +97,7 @@ describe("handleCellClick", () => {
 		expect(table).not.toHaveClass("values");
 	});
 	it("clicking on the cell once in notes should change to the values class", async () => {
-		const user = userEvent.setup();
-		const sudoku = setupTable();
-		const table =
-			sudoku.cells[0].element.parentElement!.parentElement!.parentElement!;
+		const table = document.getElementsByTagName("table")[0];
 
 		await user.click(sudoku.cells[5].element);
 		await user.click(sudoku.cells[5].element);
@@ -101,10 +107,7 @@ describe("handleCellClick", () => {
 		expect(table).not.toHaveClass("notes");
 	});
 	it("clicking on a different cell should not change the notes/values classes", async () => {
-		const user = userEvent.setup();
-		const sudoku = setupTable();
-		const table =
-			sudoku.cells[0].element.parentElement!.parentElement!.parentElement!;
+		const table = document.getElementsByTagName("table")[0];
 
 		await user.click(sudoku.cells[1].element);
 		await user.click(sudoku.cells[5].element);
@@ -118,8 +121,6 @@ describe("handleCellClick", () => {
 describe("handleKeypress", () => {
 	describe("Enter key", () => {
 		it("should change the value of notes", async () => {
-			const user = userEvent.setup();
-			const sudoku = setupTable();
 			await user.tab();
 
 			await user.keyboard("{enter}");
@@ -128,10 +129,7 @@ describe("handleKeypress", () => {
 			expect(sudoku).toHaveProperty("notes", false);
 		});
 		it("should change the class of table to notes", async () => {
-			const user = userEvent.setup();
-			const sudoku = setupTable();
-			const table =
-				sudoku.cells[0].element.parentElement!.parentElement!.parentElement!;
+			const table = document.getElementsByTagName("table")[0];
 			await user.tab();
 
 			await user.keyboard("{enter}");
@@ -140,10 +138,7 @@ describe("handleKeypress", () => {
 			expect(table).not.toHaveClass("values");
 		});
 		it("should change the class of table back to values", async () => {
-			const user = userEvent.setup();
-			const sudoku = setupTable();
-			const table =
-				sudoku.cells[0].element.parentElement!.parentElement!.parentElement!;
+			const table = document.getElementsByTagName("table")[0];
 			await user.tab();
 
 			await user.keyboard("{enter}");
@@ -153,10 +148,7 @@ describe("handleKeypress", () => {
 			expect(table).not.toHaveClass("notes");
 		});
 		it("should not change notes or classes if the table is not focused on", async () => {
-			const user = userEvent.setup();
-			const sudoku = setupTable();
-			const table =
-				sudoku.cells[0].element.parentElement!.parentElement!.parentElement!;
+			const table = document.getElementsByTagName("table")[0];
 
 			await user.keyboard("{enter}");
 			expect(table).toHaveClass("values");
@@ -166,8 +158,6 @@ describe("handleKeypress", () => {
 	});
 	describe("arrow keys", () => {
 		it("up arrow should move focus to the cell above", async () => {
-			const user = userEvent.setup();
-			const sudoku = setupTable();
 			sudoku.cells[21].element.focus();
 
 			await user.keyboard("{ArrowUp}");
@@ -179,8 +169,6 @@ describe("handleKeypress", () => {
 			expect(focusedElement).toHaveProperty("position", 12);
 		});
 		it("up arrow should not change focus if focused cell is on top row", async () => {
-			const user = userEvent.setup();
-			const sudoku = setupTable();
 			sudoku.cells[5].element.focus();
 
 			await user.keyboard("{ArrowUp}");
@@ -192,8 +180,6 @@ describe("handleKeypress", () => {
 			expect(focusedElement).toHaveProperty("position", 5);
 		});
 		it("down arrow should move focus to the cell below", async () => {
-			const user = userEvent.setup();
-			const sudoku = setupTable();
 			sudoku.cells[34].element.focus();
 
 			await user.keyboard("{ArrowDown}");
@@ -205,8 +191,6 @@ describe("handleKeypress", () => {
 			expect(focusedElement).toHaveProperty("position", 43);
 		});
 		it("down arrow should not change focus if focused cell is on bottom row", async () => {
-			const user = userEvent.setup();
-			const sudoku = setupTable();
 			sudoku.cells[77].element.focus();
 
 			await user.keyboard("{ArrowDown}");
@@ -218,8 +202,6 @@ describe("handleKeypress", () => {
 			expect(focusedElement).toHaveProperty("position", 77);
 		});
 		it("right arrow should move focus to the cell right", async () => {
-			const user = userEvent.setup();
-			const sudoku = setupTable();
 			sudoku.cells[14].element.focus();
 
 			await user.keyboard("{ArrowRight}");
@@ -231,8 +213,6 @@ describe("handleKeypress", () => {
 			expect(focusedElement).toHaveProperty("position", 15);
 		});
 		it("right arrow should not change focus if focused cell is on right column", async () => {
-			const user = userEvent.setup();
-			const sudoku = setupTable();
 			sudoku.cells[53].element.focus();
 
 			await user.keyboard("{ArrowRight}");
@@ -244,8 +224,6 @@ describe("handleKeypress", () => {
 			expect(focusedElement).toHaveProperty("position", 53);
 		});
 		it("left arrow should move focus to the cell left", async () => {
-			const user = userEvent.setup();
-			const sudoku = setupTable();
 			sudoku.cells[60].element.focus();
 
 			await user.keyboard("{ArrowLeft}");
@@ -257,8 +235,6 @@ describe("handleKeypress", () => {
 			expect(focusedElement).toHaveProperty("position", 59);
 		});
 		it("left arrow should not change focus if focused cell is on left column", async () => {
-			const user = userEvent.setup();
-			const sudoku = setupTable();
 			sudoku.cells[45].element.focus();
 
 			await user.keyboard("{ArrowLeft}");
@@ -270,8 +246,6 @@ describe("handleKeypress", () => {
 			expect(focusedElement).toHaveProperty("position", 45);
 		});
 		it("should not change focus if the table is not focused on", async () => {
-			const user = userEvent.setup();
-			setupTable();
 			document.body.focus();
 
 			await user.keyboard("{ArrowLeft}");
@@ -293,8 +267,6 @@ describe("handleKeypress", () => {
 	});
 	describe("number keys", () => {
 		it("should not change anything if the table is not focused on", async () => {
-			const user = userEvent.setup();
-			const sudoku = setupTable();
 			document.body.focus();
 
 			for (let i = 1; i < 10; i++) {
@@ -303,8 +275,6 @@ describe("handleKeypress", () => {
 			}
 		}),
 			it("should set the value if a number key is pressed", async () => {
-				const user = userEvent.setup();
-				const sudoku = setupTable();
 				const cell = sudoku.cells[0];
 				cell.element.focus();
 
@@ -314,8 +284,6 @@ describe("handleKeypress", () => {
 				}
 			});
 		it("should unset the value if they key pressed is equal to the value", async () => {
-			const user = userEvent.setup();
-			const sudoku = setupTable();
 			const cell = sudoku.cells[54];
 			cell.element.focus();
 
@@ -326,8 +294,6 @@ describe("handleKeypress", () => {
 			}
 		});
 		it("should add the value to possible values if notes is true", async () => {
-			const user = userEvent.setup();
-			const sudoku = setupTable();
 			sudoku.notes = true;
 			const cell = sudoku.cells[33];
 			cell.element.focus();
@@ -338,8 +304,6 @@ describe("handleKeypress", () => {
 			}
 		});
 		it("should remove the value from possible values if notes is true", async () => {
-			const user = userEvent.setup();
-			const sudoku = setupTable();
 			sudoku.notes = true;
 			const cell = sudoku.cells[12];
 			cell.element.focus();
@@ -351,8 +315,6 @@ describe("handleKeypress", () => {
 			}
 		});
 		it("should not change possible values when in notes and there is a value", async () => {
-			const user = userEvent.setup();
-			const sudoku = setupTable();
 			const cell = sudoku.cells[12];
 			cell.setValue(4);
 			sudoku.notes = true;
@@ -368,8 +330,6 @@ describe("handleKeypress", () => {
 	});
 	describe("backspace/delete", () => {
 		it("should do nothing if a cell is not focused", async () => {
-			const user = userEvent.setup();
-			const sudoku = setupTable();
 			document.body.focus();
 			sudoku.cells[45].setValue(5);
 
@@ -380,8 +340,6 @@ describe("handleKeypress", () => {
 			expect(sudoku.cells[45].value).toBe(5);
 		});
 		it("should set the value to 0 if there is a value in the cell", async () => {
-			const user = userEvent.setup();
-			const sudoku = setupTable();
 			const cell = sudoku.cells[5];
 			cell.setValue(6);
 			cell.element.focus();
@@ -394,8 +352,6 @@ describe("handleKeypress", () => {
 			expect(cell).toHaveProperty("value", 0);
 		});
 		it("should do nothing if in notes mode", async () => {
-			const user = userEvent.setup();
-			const sudoku = setupTable();
 			const cell = sudoku.cells[16];
 			cell.setValue(3);
 			cell.element.focus();
@@ -408,8 +364,6 @@ describe("handleKeypress", () => {
 			expect(cell).toHaveProperty("value", 3);
 		});
 		it("should not change the value if it is already 0", async () => {
-			const user = userEvent.setup();
-			const sudoku = setupTable();
 			const cell = sudoku.cells[26];
 			cell.element.focus();
 
